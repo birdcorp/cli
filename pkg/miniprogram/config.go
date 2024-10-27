@@ -7,12 +7,10 @@ import (
 )
 
 type Config struct {
-	AppID              string   `json:"app_id"`
-	AppSecret          string   `json:"app_secret"`
+	Version            string   `json:"version"`
 	BackgroundColor    string   `json:"background_color"`
 	BuildCommand       string   `json:"build_command"`
 	BuildDirectory     string   `json:"build_directory"`
-	CodeImage          string   `json:"code_image"`
 	Description        string   `json:"description"`
 	ForegroundColor    string   `json:"foreground_color"`
 	IconImage          string   `json:"icon_image"`
@@ -21,25 +19,21 @@ type Config struct {
 	NavTextColor       string   `json:"nav_text_color"`
 	Tags               []string `json:"tags"`
 	Testers            []string `json:"testers"`
-	URL                string   `json:"url"`
 }
 
 var defaultConfig = Config{
-	AppID:              "",
-	AppSecret:          "",
+	Name:               "my app name",
+	Version:            "1.0.0",
 	BackgroundColor:    "#ffffff",
 	BuildCommand:       "npm run build",
 	BuildDirectory:     "build",
-	CodeImage:          "",
 	Description:        "Some description about the miniprogram",
 	ForegroundColor:    "#000000",
 	IconImage:          "https://payments-webapp-assets-stage.s3.us-west-2.amazonaws.com/miniprograms/blank-icon.png",
-	Name:               "",
 	NavBackgroundColor: "transparent",
 	NavTextColor:       "dark",
 	Tags:               []string{},
 	Testers:            []string{},
-	URL:                "https://www.my-staging-link-example.com",
 }
 
 // CreateConfig creates a miniprogram configuration file with default values.

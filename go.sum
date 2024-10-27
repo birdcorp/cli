@@ -1,5 +1,7 @@
 github.com/birdcorp/bird-go-sdk v0.0.0-20241020164859-9c33331bd59e h1:mfrykSUXCXDHKZtic0tfVZZTQHMBFWAebgdRRFYKoeA=
 github.com/birdcorp/bird-go-sdk v0.0.0-20241020164859-9c33331bd59e/go.mod h1:SfJnSAVMtNiXOVUy8iLHGXyV3BY2MGy0nGRa8P0rL/w=
+github.com/birdcorp/bird-go-sdk v0.0.0-20241027182655-4ff27f873225 h1:/Ciy989iVJxlZ4sHAgKwp+ECPrV8CJ0GiGvXz+LwI5A=
+github.com/birdcorp/bird-go-sdk v0.0.0-20241027182655-4ff27f873225/go.mod h1:wxFsMxzxiYFeFJtF7r+LizxvoKo8CRQry4WHXUNYGNc=
 github.com/cpuguy83/go-md2man/v2 v2.0.4/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=

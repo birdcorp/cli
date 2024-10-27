@@ -17,9 +17,13 @@ func init() {
 	miniprogramCmd.AddCommand(createMiniprogramCmd)
 	miniprogramCmd.AddCommand(listMiniprogramCmd)
 	miniprogramCmd.AddCommand(deleteMiniprogramCmd)
+	miniprogramCmd.AddCommand(uploadMiniprogramCmd)
+	miniprogramCmd.AddCommand(getMiniprogramCmd)
+	miniprogramCmd.AddCommand(miniprogramPreviewCmd)
 
 	// Add the orders command to the root command
 	RootCmd.AddCommand(miniprogramCmd)
 }
 
 // go run main.go miniprogram list
+// go run main.go miniprogram upload <appID>

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
@@ -61,11 +62,34 @@ var deleteApiKeyCmd = &cobra.Command{
 	},
 }
 
+var meAuthCmd = &cobra.Command{
+	Use:   "me",
+	Short: "Get the current user",
+	Long:  `This command retrieves the current user from the API.`,
+	Run: func(cmd *cobra.Command, args []string) {
+
+		ctx, apiClient, err := getAuth()
+		if err != nil {
+			log.Fatal(err)
+		}
+		account, _, err := apiClient.AccountAPI.
+			GetAccount(ctx).
+			Execute()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		printJSON(account)
+	},
+}
+
+// go run main.go auth me
+
 func init() {
 	authCmd.AddCommand(apiKeyCmd)
 	authCmd.AddCommand(getApiKeyCmd)
 	authCmd.AddCommand(deleteApiKeyCmd) // Add the delete-api-key command
-
+	authCmd.AddCommand(meAuthCmd)
 	// Add the auth command to the root command
 	RootCmd.AddCommand(authCmd)
 }

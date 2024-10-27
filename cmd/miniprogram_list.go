@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/spf13/cobra"
 )
@@ -10,8 +10,21 @@ var listMiniprogramCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all miniprograms",
 	Run: func(cmd *cobra.Command, args []string) {
-		// Logic to list miniprograms
-		fmt.Println("Listing all miniprograms...")
-		// Here you would typically call an API or database to retrieve the list of miniprograms
+		ctx, apiClient, err := getAuth()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		miniprograms, _, err := apiClient.MiniprogramAPI.
+			ListMiniprograms(ctx).
+			Execute()
+		if err != nil {
+			log.Fatalf("Error listing miniprograms: %v", err)
+		}
+
+		printJSON(miniprograms)
+
 	},
 }
+
+// go run main.go miniprogram list

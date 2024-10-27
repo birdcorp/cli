@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/spf13/cobra"
 )
@@ -11,12 +11,18 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all orders",
 	Run: func(cmd *cobra.Command, args []string) {
-		if !checkAPIKey() {
-			fmt.Println("API key is not set. Please set it using the auth command.")
-			return
+		ctx, apiClient, err := getAuth()
+		if err != nil {
+			log.Fatal(err)
 		}
 
-		// Logic to list all orders
-		fmt.Println("Listing all orders...")
+		orders, _, err := apiClient.OrdersAPI.
+			ListOrders(ctx).
+			Execute()
+		if err != nil {
+			log.Fatalf("Error listing orders: %v", err)
+		}
+
+		printJSON(orders)
 	},
 }
