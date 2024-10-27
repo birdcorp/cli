@@ -2,14 +2,6 @@
 
 
 
-```
-birdcli miniprogram init
-```
-
-```
-birdcli miniprogram create
-```
-
 
 
 ### Account
@@ -26,40 +18,6 @@ go run main.go auth me
 ```
 go run main.go auth delete-api-key
 ```
-
-
-### Miniprogram
-
-```
-go run main.go miniprogram init
-```
-
-```
-go run main.go miniprogram create
-```
-
-```
-go run main.go miniprogram create-preview <appID> --url <url>
-```
-
-```
-go run main.go miniprogram get [appID]
-```
-
-```
-go run main.go miniprogram list
-```
-
-```
-go run main.go miniprogram delete <appID>
-```
-
-
-```
-go run main.go miniprogram release <appID>
-```
-
-
 
 ### Orders
 
@@ -106,3 +64,39 @@ go run main.go orders delete [orderID]
 ```
 go run main.go orders create
 ```
+
+
+
+### Miniprogram
+
+```
+go run main.go miniprogram init
+```
+
+```
+go run main.go miniprogram create
+```
+
+```
+go run main.go miniprogram create-preview <appID> --url <url>
+```
+
+```
+go run main.go miniprogram get [appID]
+```
+
+```
+go run main.go miniprogram list
+```
+
+```
+go run main.go miniprogram delete <appID>
+```
+
+
+```
+go run main.go miniprogram release <appID>
+```
+
+
+
