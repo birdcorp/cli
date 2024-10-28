@@ -141,3 +141,18 @@ Delete webhook
 go run main.go webhook delete --id 1234567890
 ``` 
   
+
+### Events
+
+Get event by ID
+
+```
+go run main.go events get <eventID>
+```
+
+
+Stream events
+
+```
+go run main.go events stream
+```
