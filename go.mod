@@ -1,6 +1,6 @@
 module github.com/birdcorp/cli
 
-go 1.22.6
+go 1.23
 
 require (
 	github.com/birdcorp/bird-go-sdk v0.0.0-20241028013618-48e482d62719 // indirect
