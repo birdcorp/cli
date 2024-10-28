@@ -156,3 +156,13 @@ Stream events
 ```
 go run main.go events stream
 ```
+
+
+
+
+#### Release
+
+```
+git tag v1.0.0  # Replace with your version
+git push origin v1.0.0
+```
