@@ -8,13 +8,14 @@ import (
 	"os"
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
+	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/spf13/cobra"
 )
 
 // authCmd represents the auth command
-var authCmd = &cobra.Command{
-	Use:   "auth",
-	Short: "Manage authentication",
+var accountCmd = &cobra.Command{
+	Use:   "account",
+	Short: "Manage account",
 	Long:  `Set, get, or delete the API key.`,
 }
 
@@ -79,19 +80,19 @@ var meAuthCmd = &cobra.Command{
 			log.Fatal(err)
 		}
 
-		printJSON(account)
+		prettyprint.JSON(account)
 	},
 }
 
 // go run main.go auth me
 
 func init() {
-	authCmd.AddCommand(apiKeyCmd)
-	authCmd.AddCommand(getApiKeyCmd)
-	authCmd.AddCommand(deleteApiKeyCmd) // Add the delete-api-key command
-	authCmd.AddCommand(meAuthCmd)
+	accountCmd.AddCommand(apiKeyCmd)
+	accountCmd.AddCommand(getApiKeyCmd)
+	accountCmd.AddCommand(deleteApiKeyCmd) // Add the delete-api-key command
+	accountCmd.AddCommand(meAuthCmd)
 	// Add the auth command to the root command
-	RootCmd.AddCommand(authCmd)
+	RootCmd.AddCommand(accountCmd)
 }
 
 func saveAPIKey(apiKey string) error {

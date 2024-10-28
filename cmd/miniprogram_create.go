@@ -6,6 +6,7 @@ import (
 	"log"
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
+	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/spf13/cobra"
 )
 
@@ -47,7 +48,7 @@ var createMiniprogramCmd = &cobra.Command{
 			log.Fatalf("Error creating miniprogram: %v", err)
 		}
 
-		printJSON(miniprogram)
+		prettyprint.JSON(miniprogram)
 
 	},
 }

@@ -2,11 +2,12 @@ package cmd
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"strings"
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
+	"github.com/birdcorp/cli/pkg/open"
+	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/spf13/cobra"
 )
 
@@ -59,7 +60,7 @@ var createCmd = &cobra.Command{
 				log.Printf("Error creating order: %s\nHTTP Status: %s", err.Error(), httpRes.Status)
 				var errorResponse map[string]interface{}
 				if decodeErr := json.NewDecoder(httpRes.Body).Decode(&errorResponse); decodeErr == nil {
-					printJSON(errorResponse)
+					prettyprint.JSON(errorResponse)
 				} else {
 					log.Println("Could not decode error response:", decodeErr)
 				}
@@ -69,8 +70,9 @@ var createCmd = &cobra.Command{
 			log.Fatal("Order creation failed")
 		}
 
-		printJSON(response)
-		fmt.Println("Order created successfully.")
+		prettyprint.JSON(response)
+
+		open.Browser(response.Link)
 	},
 }
 

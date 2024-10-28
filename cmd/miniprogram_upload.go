@@ -3,6 +3,7 @@ package cmd
 import (
 	"log"
 
+	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/spf13/cobra"
 )
 
@@ -26,7 +27,7 @@ var uploadMiniprogramCmd = &cobra.Command{
 			log.Fatalf("Error deleting miniprogram: %v", err)
 		}
 
-		printJSON(miniprogram)
+		prettyprint.JSON(miniprogram)
 
 		log.Println("Uploading miniprogram with ID:", appID)
 	},

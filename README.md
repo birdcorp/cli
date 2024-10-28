@@ -1,22 +1,22 @@
 ### Cli
 
 
-
-
-
 ### Account
 
+
+Set API key
 ```
-go run main.go auth set-api-key [API_KEY]
+go run main.go account set-api-key [API_KEY]
 ```
 
+Get account info
 ```
-go run main.go auth me
+go run main.go account me
 ```
 
-
+Delete API key
 ```
-go run main.go auth delete-api-key
+go run main.go account delete-api-key
 ```
 
 ### Orders
@@ -61,34 +61,46 @@ go run main.go orders get [orderID]
 go run main.go orders delete [orderID]
 ```
 
-```
-go run main.go orders create
-```
 
 
 
 ### Miniprogram
 
+
+Initialize miniprogram, creates config file
 ```
 go run main.go miniprogram init
 ```
+
+Create miniprogram preview
+
+```
+go run main.go miniprogram create-preview \
+ --url https://miniprogram-developer.onrender.com/ \
+ --name "Miniprogram Developer"
+```
+
+
+Create miniprogram 
 
 ```
 go run main.go miniprogram create
 ```
 
-```
-go run main.go miniprogram create-preview <appID> --url <url>
-```
 
+Get Miniprogram by ID
 ```
 go run main.go miniprogram get [appID]
 ```
+
+List miniprograms
 
 ```
 go run main.go miniprogram list
 ```
 
+
+Delete miniprogram
 ```
 go run main.go miniprogram delete <appID>
 ```

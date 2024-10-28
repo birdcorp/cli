@@ -5,18 +5,19 @@ import (
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
 	"github.com/birdcorp/cli/pkg/open"
+	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/spf13/cobra"
 )
 
 var miniprogramPreviewCmd = &cobra.Command{
 	Use:   "create-preview <appID> --url <url>",
 	Short: "Preview a miniprogram",
-	Args:  cobra.ExactArgs(1), // Ensure exactly one argument is provided
+	Args:  cobra.NoArgs, // No arguments are required
 	Run: func(cmd *cobra.Command, args []string) {
-		appID := args[0] // Retrieve the appID argument
 
 		// Get the URL from the flags
 		url, _ := cmd.Flags().GetString("url")
+		name, _ := cmd.Flags().GetString("name")
 
 		// Get authentication context and client
 		ctx, apiClient, err := getAuth()
@@ -24,30 +25,36 @@ var miniprogramPreviewCmd = &cobra.Command{
 			log.Fatal(err)
 		}
 
-		miniprogram, _, err := apiClient.MiniprogramAPI.
-			CreateMiniProgramPreview(ctx, appID).
+		preview, _, err := apiClient.MiniprogramAPI.
+			CreateMiniProgramPreview(ctx).
 			CreateMiniProgramPreviewRequest(birdsdk.CreateMiniProgramPreviewRequest{
-				Url: url,
+				Url:  url,
+				Name: name,
 			}).
 			Execute()
 		if err != nil {
 			log.Fatalf("Error creating miniprogram preview: %v", err)
 		}
 
-		printJSON(miniprogram)
+		prettyprint.JSON(preview)
 
-		if miniprogram.Link != nil {
-			open.Browser(*miniprogram.Link)
+		if preview.Link != nil {
+			open.Browser(*preview.Link)
 		}
-
-		log.Println("Previewing miniprogram with ID:", appID)
 	},
 }
 
 func init() {
 	miniprogramPreviewCmd.Flags().String("url", "", "URL for the miniprogram preview")
+	miniprogramPreviewCmd.Flags().String("name", "", "Name for the miniprogram preview")
 	miniprogramPreviewCmd.MarkFlagRequired("url")
 }
 
 // go run main.go miniprogram create-preview <appID> --url <url>
-// go run main.go miniprogram create-preview 17e9a4eaf2afd428 --url https://miniprogram-developer.onrender.com/
+//
+
+/*
+go run main.go miniprogram create-preview \
+ --url https://miniprogram-developer.onrender.com/ \
+ --name "Miniprogram Developer"
+*/

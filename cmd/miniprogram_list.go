@@ -3,6 +3,7 @@ package cmd
 import (
 	"log"
 
+	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/spf13/cobra"
 )
 
@@ -22,7 +23,7 @@ var listMiniprogramCmd = &cobra.Command{
 			log.Fatalf("Error listing miniprograms: %v", err)
 		}
 
-		printJSON(miniprograms)
+		prettyprint.JSON(miniprograms)
 
 	},
 }
