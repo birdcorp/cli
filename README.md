@@ -21,6 +21,8 @@ go run main.go account delete-api-key
 
 ### Orders
 
+Create order 
+
 ```
 go run main.go orders create \
   --total-value "10.99" \
@@ -49,13 +51,19 @@ go run main.go orders create \
   --required-billing-fields "name,postalAddress,phone,email"
 ```
 
+List orders
+
 ```
 go run main.go orders list
 ```
 
+Get order by ID
+
 ```
 go run main.go orders get [orderID]
 ```
+
+Delete order
 
 ```
 go run main.go orders delete [orderID]
@@ -66,7 +74,7 @@ go run main.go orders delete [orderID]
 
 ### Miniprogram
 
-
+  
 Initialize miniprogram, creates config file
 ```
 go run main.go miniprogram init
