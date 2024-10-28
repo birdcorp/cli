@@ -11,7 +11,7 @@ go run main.go account set-api-key [API_KEY]
 
 Get account info
 ```
-go run main.go account me
+go run main.go account
 ```
 
 Delete API key
@@ -74,7 +74,7 @@ go run main.go orders delete [orderID]
 
 ### Miniprogram
 
-  
+
 Initialize miniprogram, creates config file
 ```
 go run main.go miniprogram init
@@ -120,3 +120,24 @@ go run main.go miniprogram release <appID>
 
 
 
+
+### Webhooks
+
+Create webhook
+
+```
+go run main.go webhook create --url https://www.example.com
+``` 
+
+List webhooks
+
+```
+go run main.go webhook list
+``` 
+
+Delete webhook
+
+```
+go run main.go webhook delete --id 1234567890
+``` 
+  

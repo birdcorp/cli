@@ -3,6 +3,7 @@ package cmd
 import (
 	"log"
 
+	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/spf13/cobra"
 )
 
@@ -23,6 +24,6 @@ var listCmd = &cobra.Command{
 			log.Fatalf("Error listing orders: %v", err)
 		}
 
-		printJSON(orders)
+		prettyprint.JSON(orders)
 	},
 }

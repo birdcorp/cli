@@ -1,8 +1,9 @@
 package cmd
 
 import (
-	"fmt"
+	"log"
 
+	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/spf13/cobra"
 )
 
@@ -12,13 +13,20 @@ var getCmd = &cobra.Command{
 	Short: "Get an order by ID",
 	Args:  cobra.ExactArgs(1), // Ensure exactly one argument is provided
 	Run: func(cmd *cobra.Command, args []string) {
-		if !checkAPIKey() {
-			fmt.Println("API key is not set. Please set it using the auth command.")
-			return
+		orderID := args[0] // Retrieve the orderID argument
+
+		ctx, apiClient, err := getAuth()
+		if err != nil {
+			log.Fatal(err)
 		}
 
-		id := args[0] // Get the order ID from the argument
-		// Logic to get the order by ID
-		fmt.Printf("Getting order with ID: %s\n", id)
+		order, _, err := apiClient.OrdersAPI.
+			GetOrder(ctx, orderID).
+			Execute()
+		if err != nil {
+			log.Fatalf("Error listing orders: %v", err)
+		}
+
+		prettyprint.JSON(order)
 	},
 }

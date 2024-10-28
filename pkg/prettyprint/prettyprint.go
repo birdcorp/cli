@@ -30,27 +30,37 @@ func printJSON(data interface{}, keyColor func(a ...interface{}) string, valueCo
 	switch v := data.(type) {
 	case map[string]interface{}:
 		fmt.Println("{")
-		for key, value := range v {
-			fmt.Printf("%s\"%s\": ", indentString(indent+2), keyColor(key))
-			printJSON(value, keyColor, valueColor, indent+2)
+		keys := make([]string, 0, len(v))
+		for key := range v {
+			keys = append(keys, key)
 		}
-		fmt.Printf("%s}", indentString(indent))
+		for i, key := range keys {
+			fmt.Printf("%s\"%s\": ", indentString(indent+2), keyColor(key))
+			printJSON(v[key], keyColor, valueColor, indent+2)
+			if i < len(keys)-1 {
+				fmt.Println(",")
+			}
+		}
+		fmt.Printf("\n%s}", indentString(indent))
 	case []interface{}:
 		fmt.Println("[")
-		for _, item := range v {
+		for i, item := range v {
 			printJSON(item, keyColor, valueColor, indent+2)
+			if i < len(v)-1 {
+				fmt.Println(",")
+			}
 		}
-		fmt.Printf("%s]", indentString(indent))
+		fmt.Printf("\n%s]", indentString(indent))
 	case string:
-		fmt.Printf("\"%s\",\n", valueColor(v))
+		fmt.Printf("\"%s\"", valueColor(v))
 	case float64:
-		fmt.Printf("%s,\n", valueColor(v))
+		fmt.Printf("%s", valueColor(fmt.Sprintf("%.2f", v)))
 	case bool:
-		fmt.Printf("%t,\n", v)
+		fmt.Printf("%t", v)
 	case nil:
-		fmt.Print("null,\n")
+		fmt.Print("null")
 	default:
-		fmt.Printf("\"%s\",\n", valueColor(v))
+		fmt.Printf("\"%s\"", valueColor(v))
 	}
 }
 
