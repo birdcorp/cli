@@ -19,11 +19,7 @@ var miniprogramPreviewCmd = &cobra.Command{
 		url, _ := cmd.Flags().GetString("url")
 		name, _ := cmd.Flags().GetString("name")
 
-		// Get authentication context and client
-		ctx, apiClient, err := getAuth()
-		if err != nil {
-			log.Fatal(err)
-		}
+		ctx, apiClient := mustGetAuth()
 
 		preview, _, err := apiClient.MiniprogramAPI.
 			CreateMiniProgramPreview(ctx).

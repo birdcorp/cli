@@ -4,3 +4,5 @@ birdcli
 miniprogram-config.json
 config.json
 
+.idea/
+.env

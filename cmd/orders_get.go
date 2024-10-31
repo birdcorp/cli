@@ -15,10 +15,7 @@ var getCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		orderID := args[0] // Retrieve the orderID argument
 
-		ctx, apiClient, err := getAuth()
-		if err != nil {
-			log.Fatal(err)
-		}
+		ctx, apiClient := mustGetAuth()
 
 		order, _, err := apiClient.OrdersAPI.
 			GetOrder(ctx, orderID).

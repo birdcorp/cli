@@ -13,11 +13,7 @@ var listWebhooksCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List webhooks",
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient, err := getAuth()
-		if err != nil {
-			log.Fatal(err)
-		}
-		log.Println("Creating webhook.")
+		ctx, apiClient := mustGetAuth()
 
 		webhooks, httpRes, err := apiClient.WebhooksAPI.
 			ListWebhooks(ctx).
@@ -33,13 +29,9 @@ var listWebhooksCmd = &cobra.Command{
 					}
 				}
 			}
-			log.Fatalf("Error creating webhook: %v", err)
+			log.Fatalf("Error listing webhooks: %v", err)
 		}
 
 		prettyprint.JSON(webhooks)
 	},
-}
-
-func init() {
-
 }

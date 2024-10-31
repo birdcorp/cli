@@ -12,10 +12,7 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all orders",
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient, err := getAuth()
-		if err != nil {
-			log.Fatal(err)
-		}
+		ctx, apiClient := mustGetAuth()
 
 		orders, _, err := apiClient.OrdersAPI.
 			ListOrders(ctx).

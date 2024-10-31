@@ -11,10 +11,7 @@ var initMiniprogramCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize a miniprogram",
 	Run: func(cmd *cobra.Command, args []string) {
-		_, _, err := getAuth()
-		if err != nil {
-			log.Fatal(err)
-		}
+		_, _ = mustGetAuth()
 
 		miniprogram.InitConfig()
 

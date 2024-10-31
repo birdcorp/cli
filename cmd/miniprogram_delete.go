@@ -12,15 +12,12 @@ var deleteMiniprogramCmd = &cobra.Command{
 	Short: "Delete a miniprogram",
 	Args:  cobra.ExactArgs(1), // Ensure exactly one argument is provided
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient, err := getAuth() // Assuming getAuth() is your function to retrieve the context and API client
-		if err != nil {
-			log.Fatal(err)
-		}
+		ctx, apiClient := mustGetAuth()
 
 		appID := args[0] // Get the app ID from the arguments
 		log.Println("Deleting miniprogram with ID:", appID)
 
-		_, err = apiClient.MiniprogramAPI.
+		_, err := apiClient.MiniprogramAPI.
 			DeleteMiniprogram(ctx, appID).
 			Execute()
 		if err != nil {

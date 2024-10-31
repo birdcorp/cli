@@ -14,11 +14,7 @@ var createMiniprogramCmd = &cobra.Command{
 	Use:   "create",
 	Short: "Create a miniprogram",
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient, err := getAuth()
-		if err != nil {
-			log.Fatal(err)
-		}
-		log.Println("Creating miniprogram.")
+		ctx, apiClient := mustGetAuth()
 
 		miniprogram, httpRes, err := apiClient.MiniprogramAPI.
 			CreateMiniprogram(ctx).

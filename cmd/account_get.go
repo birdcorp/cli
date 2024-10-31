@@ -13,9 +13,11 @@ var getApiKeyCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		apiKey, err := getAPIKey()
 		if err != nil {
-			fmt.Printf("Error retrieving API key: %v\n", err)
-		} else {
-			fmt.Printf("API key: %s\n", apiKey)
+			fmt.Println("API key not found. Please set the API key using the following command:")
+			fmt.Println("\tbirdcli account set-api-key <your-api-key>")
+			return
 		}
+
+		fmt.Printf("API key: %s\n", apiKey)
 	},
 }

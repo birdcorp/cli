@@ -18,11 +18,8 @@ var accountCmd = &cobra.Command{
 	Short: "Manage account",
 	Long:  `Set, get, or delete the API key.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		ctx, apiClient := mustGetAuth()
 
-		ctx, apiClient, err := getAuth()
-		if err != nil {
-			log.Fatal(err)
-		}
 		account, _, err := apiClient.AccountAPI.
 			GetAccount(ctx).
 			Execute()
@@ -79,10 +76,12 @@ func getAPIKey() (string, error) {
 }
 
 // getAuthContext retrieves the API key and creates an authentication context for the API client
-func getAuth() (context.Context, *birdsdk.APIClient, error) {
+func mustGetAuth() (context.Context, *birdsdk.APIClient) {
 	apiKey, err := getAPIKey() // Assuming getAPIKey() is defined elsewhere in your code
 	if err != nil {
-		return nil, nil, fmt.Errorf("error getting API key: %w", err)
+		fmt.Println("API key not found. Please set the API key using the following command:")
+		fmt.Println("\tbirdcli account set-api-key <your-api-key>")
+		return nil, nil
 	}
 
 	config := birdsdk.NewConfiguration()
@@ -98,5 +97,5 @@ func getAuth() (context.Context, *birdsdk.APIClient, error) {
 		},
 	)
 
-	return ctx, apiClient, nil
+	return ctx, apiClient
 }

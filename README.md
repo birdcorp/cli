@@ -1,11 +1,18 @@
 ### CLI
 
-### Account
+### Install
 
+```bash
+  make install
+```
+
+### Authentication
 - **Set API Key**
   ```bash
   birdcli account set-api-key [API_KEY]
   ```
+
+### Account
 
 - **Get Account Info**
   ```bash
@@ -26,22 +33,23 @@
     --currency "USD" \
     --line-items '[
       {
-        "label": "Item1",
+        "label": "Sun Hat",
+        "type": "item",
         "value": "5.99",
         "status": "final",
-        "type": "item"
+        "thumbnailURL": "https://placehold.co/60x60"
       },
       {
-        "label": "Item2",
+        "label": "Sales Tax",
+        "type": "tax",
         "value": "5.00",
-        "status": "pending",
-        "type": "tax"
+        "status": "pending"
       },
       {
-        "label": "Shipping",
+        "label": "Delivery",
+        "type": "shipping",
         "value": "0.00",
-        "status": "pending",
-        "type": "shipping"
+        "status": "pending"
       }
     ]' \
     --required-shipping-fields "name,postalAddress,phone,email" \

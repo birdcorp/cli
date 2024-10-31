@@ -14,10 +14,7 @@ var getEventCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		eventID := args[0] // Retrieve the appID argument
 
-		ctx, apiClient, err := getAuth()
-		if err != nil {
-			log.Fatal(err)
-		}
+		ctx, apiClient := mustGetAuth()
 
 		event, _, err := apiClient.EventsAPI.
 			GetEvent(ctx, eventID).

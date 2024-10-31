@@ -11,10 +11,7 @@ var listEventsCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List events",
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient, err := getAuth()
-		if err != nil {
-			log.Fatal(err)
-		}
+		ctx, apiClient := mustGetAuth()
 
 		events, _, err := apiClient.EventsAPI.
 			ListEvents(ctx).

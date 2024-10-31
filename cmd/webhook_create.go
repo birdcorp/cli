@@ -16,10 +16,8 @@ var createWebhookCmd = &cobra.Command{
 	Use:   "create",
 	Short: "Create a webhook",
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient, err := getAuth()
-		if err != nil {
-			log.Fatal(err)
-		}
+		ctx, apiClient := mustGetAuth()
+
 		log.Println("Creating webhook.")
 
 		webhook, httpRes, err := apiClient.WebhooksAPI.

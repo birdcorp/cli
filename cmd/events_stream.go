@@ -10,6 +10,7 @@ import (
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
 	"github.com/birdcorp/cli/pkg/prettyprint"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -56,8 +57,6 @@ var streamEventsCmd = &cobra.Command{
 			if strings.HasPrefix(line, "data: ") {
 				// Remove "data: " prefix
 				eventJSON := strings.TrimPrefix(line, "data: ")
-
-				fmt.Println(eventJSON)
 				// Define the struct to hold the parsed event data
 				var event birdsdk.WebhookEvent
 
@@ -67,9 +66,14 @@ var streamEventsCmd = &cobra.Command{
 					continue
 				}
 
-				// Output or process the parsed event data
+				color.Set(color.FgGreen) // Set text color to green with a black background
+				fmt.Println(event.Type)  // Print the event type
+				color.Unset()            // Reset to default color
+
+				fmt.Println("Raw event:")
 				prettyprint.JSON(event)
-				fmt.Println() // Print a blank newline
+				fmt.Println("") // Print a blank newline
+				fmt.Println("") // Print a blank newline
 			}
 		}
 

@@ -13,12 +13,9 @@ var deleteWebhookCmd = &cobra.Command{
 	Use:   "delete",
 	Short: "Delete a webhook",
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient, err := getAuth()
-		if err != nil {
-			log.Fatal(err)
-		}
+		ctx, apiClient := mustGetAuth()
 
-		_, err = apiClient.WebhooksAPI.
+		_, err := apiClient.WebhooksAPI.
 			DeleteWebhook(ctx, webhookID).
 			Execute()
 		if err != nil {

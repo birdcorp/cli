@@ -14,10 +14,7 @@ var getMiniprogramCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		appID := args[0] // Retrieve the appID argument
 
-		ctx, apiClient, err := getAuth()
-		if err != nil {
-			log.Fatal(err)
-		}
+		ctx, apiClient := mustGetAuth()
 
 		miniprogram, _, err := apiClient.MiniprogramAPI.
 			GetMiniprogram(ctx, appID).
