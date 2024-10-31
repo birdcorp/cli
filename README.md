@@ -3,12 +3,12 @@
 ### Install
 
 ```bash
-  make install
+make install
 ```
 
 ### Authentication
 
-You need to obtain a merchant API_KEY first
+You need to obtain a merchant `API_KEY` first to use the cli.
 
 - **Set API Key**
   ```bash
