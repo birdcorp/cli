@@ -37,7 +37,7 @@
         "type": "item",
         "value": "5.99",
         "status": "final",
-        "thumbnailURL": "https://placehold.co/60x60"
+        "thumbnail_url": "https://placehold.co/60x60.png"
       },
       {
         "label": "Sales Tax",
@@ -87,6 +87,19 @@ This command generates a preview of the miniprogram using a specified URL. For l
     --url https://miniprogram-developer.onrender.com/ \
     --name "Miniprogram Developer"
   ```
+
+Example: w/ngrok url for localhost proxy
+
+```bash
+ngrok http 3000
+```
+
+```bash
+  birdcli miniprogram create-preview \
+    --url https://56fc-32-133-145-153.ngrok-free.app \
+    --name "Miniprogram Developer"
+```
+
 
 - **Create Miniprogram**
   ```bash
