@@ -83,7 +83,7 @@ You need to obtain a merchant `API_KEY` first to use the cli.
 
 - **Create Miniprogram Preview**
 
-This command generates a preview of the miniprogram using a specified URL. For local testing, you can use ngrok to create a secure tunnel. The command will produce a URL that includes a QR code, allowing you to easily scan and develop the miniprogram on mobile.
+This command opens a screen to scan a qrcode of the miniprogram using a given URL.
 
   ```bash
   birdcli miniprogram create-preview \
