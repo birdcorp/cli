@@ -3,7 +3,7 @@ BINARY_NAME=birdcli
 
 # Default Go build command
 build:
-	go build -o $(BINARY_NAME) .
+	go build -o bin/$(BINARY_NAME) .
 
 # Run the application
 run:
