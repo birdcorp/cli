@@ -7,6 +7,9 @@
 ```
 
 ### Authentication
+
+You need to obtain a merchant API_KEY first
+
 - **Set API Key**
   ```bash
   birdcli account set-api-key [API_KEY]
