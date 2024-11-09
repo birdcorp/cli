@@ -109,6 +109,11 @@ ngrok http 3000
   birdcli miniprogram create
   ```
 
+- **Release Miniprogram**
+  ```bash
+  birdcli miniprogram publish
+  ```
+  
 - **Get Miniprogram by ID**
   ```bash
   birdcli miniprogram get [appID]
@@ -124,10 +129,7 @@ ngrok http 3000
   birdcli miniprogram delete <appID>
   ```
 
-- **Release Miniprogram**
-  ```bash
-  birdcli miniprogram release <appID>
-  ```
+
 
 ### Webhooks
 

@@ -13,13 +13,14 @@ var miniprogramCmd = &cobra.Command{
 
 func init() {
 	// Add the subcommands to the orders command
-	miniprogramCmd.AddCommand(initMiniprogramCmd)
+
 	miniprogramCmd.AddCommand(createMiniprogramCmd)
 	miniprogramCmd.AddCommand(listMiniprogramCmd)
 	miniprogramCmd.AddCommand(deleteMiniprogramCmd)
-	miniprogramCmd.AddCommand(uploadMiniprogramCmd)
+	miniprogramCmd.AddCommand(publishMiniprogramCmd)
 	miniprogramCmd.AddCommand(getMiniprogramCmd)
 	miniprogramCmd.AddCommand(miniprogramPreviewCmd)
+	miniprogramCmd.AddCommand(miniprogramReleasesListCmd)
 
 	// Add the orders command to the root command
 	RootCmd.AddCommand(miniprogramCmd)
@@ -27,3 +28,4 @@ func init() {
 
 // go run main.go miniprogram list
 // go run main.go miniprogram upload <appID>
+// go run main.go miniprogram releases list
