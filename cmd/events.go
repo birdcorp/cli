@@ -16,5 +16,4 @@ func init() {
 	eventsCmd.AddCommand(listEventsCmd)
 	// Add the orders command to the root command
 	RootCmd.AddCommand(eventsCmd)
-
 }

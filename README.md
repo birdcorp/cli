@@ -3,7 +3,7 @@
 ### Install
 
 ```bash
-make install
+npm install -g birdcli-alpha
 ```
 
 ### Authentication
@@ -177,4 +177,3 @@ npm install -g birdcli-alpha
 
  npm uninstall -g birdcli-alpha
 
- 
