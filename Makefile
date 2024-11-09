@@ -9,7 +9,7 @@ build:
 run:
 	./bin/$(BINARY_NAME)
 
-# Clean up the binary file
+# Clean up the binary file from the bin folder
 clean:
 	rm -f bin/$(BINARY_NAME)
 
@@ -20,17 +20,18 @@ rebuild: clean build
 install: build
 	sudo cp bin/$(BINARY_NAME) /usr/local/bin/$(BINARY_NAME)
 
-# Delete the installed binary from /usr/local/bin
-delete:
+# Uninstall the binary from /usr/local/bin
+uninstall:
 	sudo rm -f /usr/local/bin/$(BINARY_NAME)
+	@echo "$(BINARY_NAME) has been uninstalled from /usr/local/bin"
 
 # Help message to describe the make commands
 help:
 	@echo "Makefile commands:"
-	@echo "  build   - Build the binary for birdcli"
-	@echo "  run     - Run the birdcli binary"
-	@echo "  clean   - Remove the birdcli binary from the bin folder"
-	@echo "  rebuild - Clean and rebuild the birdcli binary"
-	@echo "  install - Build and install birdcli to /usr/local/bin"
-	@echo "  delete  - Remove the installed birdcli binary from /usr/local/bin"
-	@echo "  help    - Show this help message"
+	@echo "  build     - Build the binary for $(BINARY_NAME)"
+	@echo "  run       - Run the $(BINARY_NAME) binary"
+	@echo "  clean     - Remove the $(BINARY_NAME) binary from the bin folder"
+	@echo "  rebuild   - Clean and rebuild the $(BINARY_NAME) binary"
+	@echo "  install   - Build and install $(BINARY_NAME) to /usr/local/bin"
+	@echo "  uninstall - Remove the installed $(BINARY_NAME) binary from /usr/local/bin"
+	@echo "  help      - Show this help message"

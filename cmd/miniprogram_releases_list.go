@@ -36,4 +36,4 @@ func init() {
 	miniprogramReleasesCmd.AddCommand(miniprogramReleasesListCmd)
 }
 
-//	go run main.go miniprogram releases list
+//	go run main.go miniprograms releases list

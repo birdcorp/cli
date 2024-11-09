@@ -1,10 +1,13 @@
 {
-  "name": "cli",
+  "name": "birdcli-alpha",
   "version": "1.0.0",
   "description": "### Install",
   "main": "index.js",
+  "bin": {
+    "birdcli": "./dist/birdcli-macos"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "node ./scripts/download-or-build.js"
   },
   "keywords": [],
   "author": "andy",

@@ -1,0 +1,10 @@
+node_modules
+
+fixtures
+pkg
+cmd
+
+.env 
+config.json 
+miniprogram-config.json
+Makefile

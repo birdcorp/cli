@@ -161,3 +161,20 @@ ngrok http 3000
   ```
 
 ### Release
+
+
+
+
+##### Development 
+
+npm install -g .
+
+
+which birdcli
+
+
+npm install -g birdcli-alpha
+
+ npm uninstall -g birdcli-alpha
+
+ 
