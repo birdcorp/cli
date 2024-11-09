@@ -9,8 +9,8 @@ import (
 
 // getCmd represents the get subcommand
 var getCmd = &cobra.Command{
-	Use:   "get <id>",
-	Short: "Get an order by ID",
+	Use:   "retrieve <id>",
+	Short: "Retrieve an order by ID",
 	Args:  cobra.ExactArgs(1), // Ensure exactly one argument is provided
 	Run: func(cmd *cobra.Command, args []string) {
 		orderID := args[0] // Retrieve the orderID argument

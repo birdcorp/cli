@@ -10,9 +10,9 @@ make install
 
 You need to obtain a merchant `API_KEY` first to use the cli.
 
-- **Set API Key**
+- **Login**
   ```bash
-  birdcli account set-api-key [API_KEY]
+  birdcli login
   ```
 
 ### Account
@@ -24,7 +24,7 @@ You need to obtain a merchant `API_KEY` first to use the cli.
 
 - **Delete API Key**
   ```bash
-  birdcli account delete-api-key
+  birdcli logout
   ```
 
 ### Orders
@@ -66,7 +66,7 @@ You need to obtain a merchant `API_KEY` first to use the cli.
 
 - **Get Order by ID**
   ```bash
-  birdcli orders get [orderID]
+  birdcli orders retrieve [orderID]
   ```
 
 - **Delete Order**

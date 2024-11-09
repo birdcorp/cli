@@ -8,10 +8,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var deleteApiKeyCmd = &cobra.Command{
-	Use:   "delete-api-key",
-	Short: "Delete the API key",
-	Long:  `This command deletes the API key from the local configuration file.`,
+var accountLogoutCmd = &cobra.Command{
+	Use:   "logout",
+	Short: "Logout",
+	Long:  `This command logs you out by deleting your API key from the local configuration file.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := deleteAPIKey()
 		if err != nil {

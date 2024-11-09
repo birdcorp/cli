@@ -14,7 +14,7 @@ import (
 var (
 	totalValue         string
 	currency           string
-	lineItemsJSON      string // Add a JSON string for multiple line items
+	lineItemsJSON      string
 	requiredShipFields string
 	requiredBillFields string
 )

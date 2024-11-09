@@ -34,12 +34,12 @@ var accountCmd = &cobra.Command{
 // go run main.go auth me
 
 func init() {
-	accountCmd.AddCommand(apiKeyCmd)
-	accountCmd.AddCommand(getApiKeyCmd)
-	accountCmd.AddCommand(deleteApiKeyCmd) // Add the delete-api-key command
 
 	// Add the auth command to the root command
 	RootCmd.AddCommand(accountCmd)
+
+	RootCmd.AddCommand(accountLoginCmd)
+	RootCmd.AddCommand(accountLogoutCmd)
 }
 
 func saveAPIKey(apiKey string) error {
