@@ -6,18 +6,34 @@ import (
 	birdsdk "github.com/birdcorp/bird-go-sdk"
 	"github.com/birdcorp/cli/pkg/open"
 	"github.com/birdcorp/cli/pkg/prettyprint"
+	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
 
 var miniprogramPreviewCmd = &cobra.Command{
-	Use:   "create-preview <appID> --url <url>",
+	Use:   "create-preview",
 	Short: "Preview a miniprogram",
-	Args:  cobra.NoArgs, // No arguments are required
+	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
+		// Prompt for URL
+		urlPrompt := promptui.Prompt{
+			Label:    "URL",
+			Validate: func(s string) error { return nil },
+		}
+		url, err := urlPrompt.Run()
+		if err != nil {
+			log.Fatalf("Error getting URL input: %v", err)
+		}
 
-		// Get the URL from the flags
-		url, _ := cmd.Flags().GetString("url")
-		name, _ := cmd.Flags().GetString("name")
+		// Prompt for name
+		namePrompt := promptui.Prompt{
+			Label:    "Name (optional)",
+			Validate: func(s string) error { return nil },
+		}
+		name, err := namePrompt.Run()
+		if err != nil {
+			log.Fatalf("Error getting name input: %v", err)
+		}
 
 		ctx, apiClient := mustGetAuth()
 
@@ -41,9 +57,7 @@ var miniprogramPreviewCmd = &cobra.Command{
 }
 
 func init() {
-	miniprogramPreviewCmd.Flags().String("url", "", "URL for the miniprogram preview")
-	miniprogramPreviewCmd.Flags().String("name", "", "Name for the miniprogram preview")
-	miniprogramPreviewCmd.MarkFlagRequired("url")
+	// No flags needed since we're using prompts
 }
 
 // go run main.go miniprogram create-preview <appID> --url <url>

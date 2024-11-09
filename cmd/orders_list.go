@@ -24,3 +24,5 @@ var listCmd = &cobra.Command{
 		prettyprint.JSON(orders)
 	},
 }
+
+// go run main.go orders list

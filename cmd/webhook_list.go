@@ -35,3 +35,5 @@ var listWebhooksCmd = &cobra.Command{
 		prettyprint.JSON(webhooks)
 	},
 }
+
+// go run main.go webhook list

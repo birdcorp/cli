@@ -29,6 +29,30 @@ var createMiniprogramCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, apiClient := mustGetAuth()
 
+		config, err := miniprogram.GetConfig()
+		if err != nil {
+			// log.Fatal(err)
+		}
+
+		if config != nil {
+			prompt := promptui.Prompt{
+				Label:     "Miniprogram config already exists. Do you want to continue?",
+				IsConfirm: true,
+			}
+
+			result, err := prompt.Run()
+			if err != nil {
+				log.Fatalf("Prompt failed %v\n", err)
+			}
+
+			if result == "y" {
+				fmt.Println("You chose to continue.")
+			} else {
+				fmt.Println("You chose not to continue.")
+				return
+			}
+		}
+
 		// Prompt for `name`
 		name, err := cmd.Flags().GetString("name")
 		if err != nil {
@@ -120,7 +144,7 @@ go run main.go miniprogram create \
   --tags "tag1,tag2"
 */
 
-// go run main.go miniprogram create
+// go run main.go miniprogram init
 
 // ./fixtures/app/build
 

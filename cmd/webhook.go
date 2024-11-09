@@ -6,7 +6,7 @@ import (
 
 // webhookCmd represents the webhook subcommand
 var webhookCmd = &cobra.Command{
-	Use:   "webhook",
+	Use:   "webhooks",
 	Short: "Manage webhooks",
 }
 

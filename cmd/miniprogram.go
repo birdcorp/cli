@@ -6,7 +6,7 @@ import (
 
 // ordersCmd represents the orders command
 var miniprogramCmd = &cobra.Command{
-	Use:   "miniprogram",
+	Use:   "miniprograms",
 	Short: "Manage miniprogram",
 	Long:  `Create, get, and list miniprogram.`,
 }
@@ -20,6 +20,7 @@ func init() {
 	miniprogramCmd.AddCommand(publishMiniprogramCmd)
 	miniprogramCmd.AddCommand(getMiniprogramCmd)
 	miniprogramCmd.AddCommand(miniprogramPreviewCmd)
+	miniprogramCmd.AddCommand(getMiniprogramInfoCmd)
 	miniprogramCmd.AddCommand(miniprogramReleasesListCmd)
 
 	// Add the orders command to the root command

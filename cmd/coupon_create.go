@@ -8,6 +8,7 @@ import (
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
 	"github.com/birdcorp/cli/pkg/prettyprint"
+	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
 
@@ -26,16 +27,63 @@ var couponCreateCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		ctx, apiClient := mustGetAuth()
 
+		// Get code from flag or prompt
+		code, err := cmd.Flags().GetString("code")
+		if err != nil {
+			return fmt.Errorf("error getting code flag: %v", err)
+		}
+		if code == "" {
+			prompt := promptui.Prompt{
+				Label: "Enter coupon code",
+			}
+			code, err = prompt.Run()
+			if err != nil {
+				return fmt.Errorf("prompt failed: %v", err)
+			}
+		}
+
+		// Get amount from flag or prompt
+		amount, err := cmd.Flags().GetFloat32("amount")
+		if err != nil {
+			return fmt.Errorf("error getting amount flag: %v", err)
+		}
+		if amount == 0 {
+			prompt := promptui.Prompt{
+				Label: "Enter amount issued",
+			}
+			amountStr, err := prompt.Run()
+			if err != nil {
+				return fmt.Errorf("prompt failed: %v", err)
+			}
+			fmt.Sscanf(amountStr, "%f", &amount)
+		}
+
+		// Get discount from flag or prompt
+		discount, err := cmd.Flags().GetFloat32("discount")
+		if err != nil {
+			return fmt.Errorf("error getting discount flag: %v", err)
+		}
+		if discount == 0 {
+			prompt := promptui.Prompt{
+				Label: "Enter discount amount",
+			}
+			discountStr, err := prompt.Run()
+			if err != nil {
+				return fmt.Errorf("prompt failed: %v", err)
+			}
+			fmt.Sscanf(discountStr, "%f", &discount)
+		}
+
 		log.Println("Creating new fixed amount coupon code...")
 
 		coupon, resp, err := apiClient.CouponCodesAPI.
 			CreateCouponCode(ctx).
 			CreateCouponRequest(birdsdk.CreateCouponRequest{
-				Code:           couponCode,
-				Type:           birdsdk.CouponType(couponType),
-				AmountIssued:   int32(couponAmount),
+				Code:           code,
+				Type:           birdsdk.CouponType("fixed_amount"),
+				AmountIssued:   int32(amount),
 				ExpiryDate:     couponExpiryDate,
-				DiscountAmount: &couponDiscountAmt,
+				DiscountAmount: &discount,
 			}).
 			Execute()
 
@@ -54,14 +102,9 @@ var couponCreateCmd = &cobra.Command{
 func init() {
 	couponCmd.AddCommand(couponCreateCmd)
 
-	couponCreateCmd.Flags().StringVar(&couponCode, "code", "", "Coupon code")
-	couponCreateCmd.Flags().StringVar(&couponType, "type", "fixed_amount", "Coupon type (fixed_amount)")
-	couponCreateCmd.Flags().Float32Var(&couponAmount, "amount", 0, "Amount issued")
-	couponCreateCmd.Flags().Float32Var(&couponDiscountAmt, "discount", 0, "Discount amount")
-
-	couponCreateCmd.MarkFlagRequired("code")
-	couponCreateCmd.MarkFlagRequired("amount")
-	couponCreateCmd.MarkFlagRequired("discount")
+	couponCreateCmd.Flags().String("code", "", "Coupon code")
+	couponCreateCmd.Flags().Float32("amount", 0, "Amount issued")
+	couponCreateCmd.Flags().Float32("discount", 0, "Discount amount")
 }
 
 /*

@@ -21,3 +21,5 @@ var getApiKeyCmd = &cobra.Command{
 		fmt.Printf("API key: %s\n", apiKey)
 	},
 }
+
+// go run main.go account get-api-key
