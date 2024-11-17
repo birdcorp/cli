@@ -175,5 +175,7 @@ which birdcli
 
 npm install -g birdcli-alpha
 
- npm uninstall -g birdcli-alpha
+#### Uninstall
+```
+npm uninstall -g birdcli-alpha
 

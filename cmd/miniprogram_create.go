@@ -29,10 +29,7 @@ var createMiniprogramCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, apiClient := mustGetAuth()
 
-		config, err := miniprogram.GetConfig()
-		if err != nil {
-			// log.Fatal(err)
-		}
+		config, _ := miniprogram.GetConfig()
 
 		if config != nil {
 			prompt := promptui.Prompt{
@@ -90,6 +87,7 @@ var createMiniprogramCmd = &cobra.Command{
 		response, httpRes, err := apiClient.MiniprogramAPI.
 			CreateMiniprogram(ctx).
 			Execute()
+
 		if err != nil {
 			if httpRes != nil {
 				if httpRes.Body != nil {

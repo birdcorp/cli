@@ -1,0 +1,27 @@
+version: 2
+
+# Builds configuration for darwin platform
+builds:
+  - id: birdcli
+    main: ./cmd/birdcli/main.go  # Path to your main Go package
+    goos:
+      - darwin  # Only macOS for now
+    goarch:
+      - amd64  # Target architecture
+    ldflags: -s -w  # Strips debugging symbols
+    targets:
+      - darwin/amd64
+    binary: birdcli  # Output binary file name
+
+# Archives configuration for packaging the binary
+archives:
+
+
+# Changelog configuration to filter commit messages
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+

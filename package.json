@@ -1,13 +1,16 @@
 {
   "name": "birdcli-alpha",
-  "version": "1.0.0",
-  "description": "### Install",
-  "main": "index.js",
+  "version": "1.0.3",
+  "description": "Bird Cli",
+  "files": [
+    "dist/"
+  ],
   "bin": {
-    "birdcli": "./dist/birdcli-macos"
+    "birdcli": "./index.js"
   },
   "scripts": {
-    "postinstall": "node ./scripts/download-or-build.js"
+    "build": "node ./scripts/build.js",
+    "prepare": "npm run build"
   },
   "keywords": [],
   "author": "andy",
