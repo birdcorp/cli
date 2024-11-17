@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on new version tags (e.g., v1.0.0)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Go environment
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.20'  # Replace with your Go version
+
+      # Cache Go modules for faster builds
+      - name: Cache Go modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      # Install GoReleaser
+      - name: Install GoReleaser
+        run: |
+          curl -sL https://github.com/goreleaser/goreleaser/releases/download/v1.17.1/goreleaser_Linux_x86_64.tar.gz | tar -xz
+          sudo mv goreleaser /usr/local/bin/
+
+      # Run GoReleaser to build and release
+      - name: Run GoReleaser
+        run: |
+          goreleaser release --config .goreleaser/mac.yml --clean
+
+  upload-artifacts:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upload Release Assets to GitHub
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/*  # Upload all files in dist/ directory
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

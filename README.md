@@ -179,3 +179,18 @@ npm install -g birdcli-alpha
 ```
 npm uninstall -g birdcli-alpha
 
+
+
+
+curl -L -o birdcli_1.0.4_darwin_amd64.tar.gz https://github.com/birdcorp/cli/releases/download/v1.0.4/birdcli_1.0.4_darwin_amd64.tar.gz && curl -L -o birdcli_1.0.4_checksums.txt https://github.com/birdcorp/cli/releases/download/v1.0.4/birdcli_1.0.4_checksums.txt && shasum -c birdcli_1.0.4_checksums.txt && tar -xzvf birdcli_1.0.4_darwin_amd64.tar.gz && sudo mv birdcli /usr/local/bin/ && birdcli --version
+
+
+
+#### Releaee 
+git tag v1.0.5 
+
+git push origin v1.0.5 
+
+goreleaser release --config .goreleaser/mac.yml --clean
+
+
