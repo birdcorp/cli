@@ -19,7 +19,7 @@ Bird CLI is a command line interface for managing BirdPay merchant services, inc
 <h2 align="center">
   <a href="https://demo.docuseal.tech">✨ Docs</a>
   <span>|</span>
-  <a href="https://docuseal.com/sign_up">☁️ Try in Cloud</a>
+  <a href="https://docuseal.com/sign_up">☁️ Examples</a>
 </h2>
 
 ## Features
