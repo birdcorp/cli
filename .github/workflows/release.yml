@@ -33,17 +33,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
-      # Install GoReleaser
-      - name: Install GoReleaser
-        run: |
-          curl -sL https://github.com/goreleaser/goreleaser/releases/download/v2.4.5/goreleaser_Linux_x86_64.tar.gz | tar -xz
-          sudo mv goreleaser /usr/local/bin/
-
-      # Run GoReleaser to build and release
       - name: Run GoReleaser
-        run: |
-          git status
-          goreleaser release --config .goreleaser/mac.yml --clean
+        uses: goreleaser/goreleaser-action@v5
+        with:
+          version: v2.4.5
+          args: release -f .goreleaser/mac.yml --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GORELEASER_GITHUB_TOKEN: ${{ secrets.GORELEASER_GITHUB_TOKEN }}
