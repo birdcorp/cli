@@ -10,9 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the code
+      # Checkout the code with full history
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for all tags and branches
 
       # Set up Go environment
       - name: Set up Go
@@ -40,6 +42,7 @@ jobs:
       # Run GoReleaser to build and release
       - name: Run GoReleaser
         run: |
+          git status
           goreleaser release --config .goreleaser/mac.yml --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
