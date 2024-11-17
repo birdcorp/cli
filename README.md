@@ -12,9 +12,15 @@
 <h3 align="center">
   Bird CLI - A command line interface for managing BirdPay merchant services
 </h3>
-
+<p>
 Bird CLI is a command line interface for managing BirdPay merchant services, including miniprogram previews, account management, and API key operations.
+</p>
 
+<h2 align="center">
+  <a href="https://demo.docuseal.tech">✨ Docs</a>
+  <span>|</span>
+  <a href="https://docuseal.com/sign_up">☁️ Try in Cloud</a>
+</h2>
 
 ## Features
 - Create miniprogram previews for testing and development
