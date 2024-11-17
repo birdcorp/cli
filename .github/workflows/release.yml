@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Fetch all history for all tags and branches
-          clean: true     # Clean working directory before checkout
+          clean: true     # Ensure a clean working directory
 
       # Set up Go environment
       - name: Set up Go
@@ -34,6 +34,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
+      # Clean working directory (if needed)
+      - name: Clean working directory
+        run: git restore . && git clean -fd
+
+      # Run GoReleaser
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v5
         with:
