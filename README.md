@@ -16,6 +16,17 @@
 Bird CLI is a command line interface for managing BirdPay merchant services, including miniprogram previews, account management, and API key operations.
 
 
+## Features
+- Create miniprogram previews for testing and development
+- Manage merchant account information and settings
+- Handle API key operations (login, logout)
+- Create and manage orders with line items
+- Interactive command-line prompts for easy input
+- Browser integration for preview links
+- JSON output formatting for API responses
+- Secure authentication handling
+- Cross-platform support
+
 
 ## Install
 
