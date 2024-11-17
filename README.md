@@ -10,28 +10,12 @@
   </div>
 </h1>
 <h3 align="center">
-  Bird CLI - A command line interface for managing Bird's merchant services, including miniprogram previews, account management, and API key operations
+  Bird CLI - A command line interface for managing BirdPay merchant services
 </h3>
-<p align="center">
-  <a href="https://hub.docker.com/r/docuseal/docuseal">
-    <img alt="Docker releases" src="https://img.shields.io/docker/v/docuseal/docuseal">
-  </a>
-  <a href="https://discord.gg/qygYCDGck9">
-    <img src="https://img.shields.io/discord/1125112641170448454?logo=discord"/>
-  </a>
-  <a href="https://twitter.com/intent/follow?screen_name=docusealco">
-    <img src="https://img.shields.io/twitter/follow/docusealco?style=social" alt="Follow @docusealco" />
-  </a>
-</p>
-<p>
-Bird CLI is a command line interface for managing Bird's merchant services, including miniprogram previews, account management, and API key operations.
-</p>
-</p>
-<h2 align="center">
-  <a href="https://demo.docuseal.tech">✨ Live Demo</a>
-  <span>|</span>
-  <a href="https://docuseal.com/sign_up">☁️ Try in Cloud</a>
-</h2>
+
+Bird CLI is a command line interface for managing BirdPay merchant services, including miniprogram previews, account management, and API key operations.
+
+
 
 ## Install
 
