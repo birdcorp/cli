@@ -3,7 +3,7 @@ version: 2
 # Builds configuration for darwin platform
 builds:
   - id: birdcli
-    main: ./cmd/main.go  # Path to your main Go package
+    main: ./main.go  # Path to your main Go package
     goos:
       - darwin  # Only macOS for now
     goarch:
