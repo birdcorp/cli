@@ -2,9 +2,16 @@
 
 ### Install
 
+
+#### Homebrew
 ```bash
-npm install -g birdcli-alpha
+brew update
+
+brew tap birdcorp/homebrew-bird-cli
+
+brew install birdcli
 ```
+
 
 ### Authentication
 
@@ -86,7 +93,7 @@ You need to obtain a merchant `API_KEY` first to use the cli.
 This command opens a screen to scan a qrcode of the miniprogram using a given URL.
 
   ```bash
-  birdcli miniprogram create-preview \
+  birdcli miniprograms create-preview \
     --url https://miniprogram-developer.onrender.com/ \
     --name "Miniprogram Developer"
   ```
@@ -98,7 +105,7 @@ ngrok http 3000
 ```
 
 ```bash
-  birdcli miniprogram create-preview \
+  birdcli miniprograms create-preview \
     --url https://56fc-32-133-145-153.ngrok-free.app \
     --name "Miniprogram Developer"
 ```
@@ -182,8 +189,10 @@ npm uninstall -g birdcli-alpha
 
 
 
-curl -L -o birdcli_1.0.4_darwin_amd64.tar.gz https://github.com/birdcorp/cli/releases/download/v1.0.4/birdcli_1.0.4_darwin_amd64.tar.gz && curl -L -o birdcli_1.0.4_checksums.txt https://github.com/birdcorp/cli/releases/download/v1.0.4/birdcli_1.0.4_checksums.txt && shasum -c birdcli_1.0.4_checksums.txt && tar -xzvf birdcli_1.0.4_darwin_amd64.tar.gz && sudo mv birdcli /usr/local/bin/ && birdcli --version
-
+curl -L https://github.com/birdcorp/cli/releases/download/v1.0.6/birdcli_Darwin_x86_64.tar.gz -o birdcli_Darwin_x86_64.tar.gz && \
+tar -xvf birdcli_Darwin_x86_64.tar.gz && \
+sudo mv birdcli /usr/local/bin/ && \
+birdcli --version
 
 
 #### Releaee 
