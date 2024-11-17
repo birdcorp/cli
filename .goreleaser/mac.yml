@@ -9,8 +9,6 @@ builds:
     goarch:
       - amd64  # Target architecture
     ldflags: -s -w  # Strips debugging symbols
-    targets:
-      - darwin/amd64
     binary: birdcli  # Output binary file name
 
 # Archives configuration for packaging the binary
