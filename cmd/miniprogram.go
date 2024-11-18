@@ -25,6 +25,28 @@ func init() {
 
 	// Add the orders command to the root command
 	RootCmd.AddCommand(miniprogramCmd)
+
+	miniprogramCmd.SetHelpTemplate(`
+$ birdcli miniprograms
+
+📲 The miniprograms command allows you to manage your Bird miniprograms.
+You can create, publish, preview and manage your miniprograms. This includes
+uploading new versions, managing releases, and getting build information.
+
+COMMANDS:
+  birdcli miniprograms preview       📱 Preview a miniprogram
+
+  birdcli miniprograms init          🔧 Initialize miniprogram config
+  birdcli miniprograms create        ➕ Create a miniprogram
+  birdcli miniprograms delete <id>   🗑️  Delete a miniprogram
+  birdcli miniprograms list          📋 List miniprograms
+  birdcli miniprograms publish <id>  🚀 Publish a miniprogram
+  birdcli miniprograms get <id>      🔍 Get a miniprogram
+  birdcli miniprograms info <id>     ℹ️  Get miniprogram info
+  birdcli miniprograms releases list 📦 List miniprogram releases
+
+Use "birdcli [command] --help" for more information about a command.
+`)
 }
 
 // go run main.go miniprogram list

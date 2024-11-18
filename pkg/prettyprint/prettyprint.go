@@ -8,25 +8,33 @@ import (
 	"github.com/fatih/color"
 )
 
+// JSON takes an interface and prints it as a color-highlighted JSON string
 func JSON(data interface{}) {
 	jsonData, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
 		log.Fatalf("Error marshalling JSON: %v", err)
 	}
 
-	var prettyJSON map[string]interface{}
+	var prettyJSON interface{}
 	err = json.Unmarshal(jsonData, &prettyJSON)
 	if err != nil {
 		log.Fatalf("Error unmarshalling JSON: %v", err)
 	}
 
-	keyColor := color.New(color.FgCyan).SprintFunc()
-	valueColor := color.New(color.FgGreen).SprintFunc()
+	keyColor := color.New(color.FgHiMagenta).SprintFunc()
+	stringValueColor := color.New(color.FgGreen).SprintFunc()
+	numberValueColor := color.New(color.FgMagenta).SprintFunc()
+	boolValueColor := color.New(color.FgYellow).SprintFunc()
+	nullValueColor := color.New(color.FgHiBlack).SprintFunc()
 
-	printJSON(prettyJSON, keyColor, valueColor, 0)
+	printJSON(prettyJSON, keyColor, stringValueColor, numberValueColor, boolValueColor, nullValueColor, 0)
 }
 
-func printJSON(data interface{}, keyColor func(a ...interface{}) string, valueColor func(a ...interface{}) string, indent int) {
+func printJSON(
+	data interface{},
+	keyColor, stringValueColor, numberValueColor, boolValueColor, nullValueColor func(a ...interface{}) string,
+	indent int,
+) {
 	switch v := data.(type) {
 	case map[string]interface{}:
 		fmt.Println("{")
@@ -36,7 +44,7 @@ func printJSON(data interface{}, keyColor func(a ...interface{}) string, valueCo
 		}
 		for i, key := range keys {
 			fmt.Printf("%s\"%s\": ", indentString(indent+2), keyColor(key))
-			printJSON(v[key], keyColor, valueColor, indent+2)
+			printJSON(v[key], keyColor, stringValueColor, numberValueColor, boolValueColor, nullValueColor, indent+2)
 			if i < len(keys)-1 {
 				fmt.Println(",")
 			}
@@ -45,22 +53,23 @@ func printJSON(data interface{}, keyColor func(a ...interface{}) string, valueCo
 	case []interface{}:
 		fmt.Println("[")
 		for i, item := range v {
-			printJSON(item, keyColor, valueColor, indent+2)
+			fmt.Printf("%s", indentString(indent+2))
+			printJSON(item, keyColor, stringValueColor, numberValueColor, boolValueColor, nullValueColor, indent+2)
 			if i < len(v)-1 {
 				fmt.Println(",")
 			}
 		}
 		fmt.Printf("\n%s]", indentString(indent))
 	case string:
-		fmt.Printf("\"%s\"", valueColor(v))
+		fmt.Printf("\"%s\"", stringValueColor(v))
 	case float64:
-		fmt.Printf("%s", valueColor(fmt.Sprintf("%.2f", v)))
+		fmt.Printf("%s", numberValueColor(fmt.Sprintf("%.2f", v)))
 	case bool:
-		fmt.Printf("%t", v)
+		fmt.Printf("%s", boolValueColor(v))
 	case nil:
-		fmt.Print("null")
+		fmt.Printf("%s", nullValueColor("null"))
 	default:
-		fmt.Printf("\"%s\"", valueColor(v))
+		fmt.Printf("\"%s\"", stringValueColor(v))
 	}
 }
 

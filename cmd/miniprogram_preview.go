@@ -11,7 +11,7 @@ import (
 )
 
 var miniprogramPreviewCmd = &cobra.Command{
-	Use:   "create-preview",
+	Use:   "preview",
 	Short: "Preview a miniprogram",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
