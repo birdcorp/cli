@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
 	"github.com/birdcorp/cli/pkg/prettyprint"
@@ -42,7 +43,24 @@ func init() {
 	RootCmd.AddCommand(accountLogoutCmd)
 }
 
+func getConfigDir() (string, error) {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return "", err
+	}
+	configDir := filepath.Join(homeDir, ".birdcli")
+	if err := os.MkdirAll(configDir, 0755); err != nil {
+		return "", err
+	}
+	return configDir, nil
+}
+
 func saveAPIKey(apiKey string) error {
+	configDir, err := getConfigDir()
+	if err != nil {
+		return err
+	}
+
 	config := map[string]string{
 		"API_KEY": apiKey,
 	}
@@ -52,11 +70,18 @@ func saveAPIKey(apiKey string) error {
 		return err
 	}
 
-	return os.WriteFile("config.json", file, 0644)
+	configFile := filepath.Join(configDir, "config.json")
+	return os.WriteFile(configFile, file, 0600)
 }
 
 func getAPIKey() (string, error) {
-	file, err := os.ReadFile("config.json")
+	configDir, err := getConfigDir()
+	if err != nil {
+		return "", err
+	}
+
+	configFile := filepath.Join(configDir, "config.json")
+	file, err := os.ReadFile(configFile)
 	if err != nil {
 		return "", err
 	}
@@ -77,11 +102,12 @@ func getAPIKey() (string, error) {
 
 // getAuthContext retrieves the API key and creates an authentication context for the API client
 func mustGetAuth() (context.Context, *birdsdk.APIClient) {
-	apiKey, err := getAPIKey() // Assuming getAPIKey() is defined elsewhere in your code
+	apiKey, err := getAPIKey()
 	if err != nil {
-		fmt.Println("API key not found. Please set the API key using the following command:")
-		fmt.Println("\tbirdcli account set-api-key <your-api-key>")
-		return nil, nil
+		fmt.Printf("\x1b[31m❌ API key not found\x1b[0m\n")
+		fmt.Printf("\x1b[33m💡 Please set the API key using the following command:\x1b[0m\n")
+		fmt.Printf("\x1b[36m\t$ birdcli login\x1b[0m\n")
+		os.Exit(1)
 	}
 
 	config := birdsdk.NewConfiguration()
