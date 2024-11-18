@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"net/http"
+	"os"
 
 	"github.com/birdcorp/cli/pkg/miniprogram"
 	"github.com/birdcorp/cli/pkg/prettyprint"
@@ -73,7 +75,7 @@ var createMiniprogramCmd = &cobra.Command{
 			log.Fatal("Error getting build-directory flag:", err)
 		}
 		if buildDir == "" {
-			buildDir = promptUser("Enter build directory path example: ./build")
+			buildDir = "./build"
 		}
 
 		appIcon, err := cmd.Flags().GetString("icon-image")
@@ -81,7 +83,28 @@ var createMiniprogramCmd = &cobra.Command{
 			log.Fatal("Error getting icon-image flag:", err)
 		}
 		if appIcon == "" {
-			appIcon = promptUser("Enter icon file path example: ./app-icon.png")
+			appIcon = "./app-icon.png"
+		}
+
+		// Download default icon if no icon was provided
+		if appIcon == "./app-icon.png" {
+			defaultIconURL := "https://dlkosrb2bmrzf.cloudfront.net/miniprograms/blank-icon.png"
+			resp, err := http.Get(defaultIconURL)
+			if err != nil {
+				log.Fatalf("Error downloading default icon: %v", err)
+			}
+			defer resp.Body.Close()
+
+			out, err := os.Create("app-icon.png")
+			if err != nil {
+				log.Fatalf("Error creating icon file: %v", err)
+			}
+			defer out.Close()
+
+			_, err = io.Copy(out, resp.Body)
+			if err != nil {
+				log.Fatalf("Error saving icon file: %v", err)
+			}
 		}
 
 		response, httpRes, err := apiClient.MiniprogramAPI.

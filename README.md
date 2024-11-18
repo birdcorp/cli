@@ -146,7 +146,7 @@ ngrok http 3000
 
 - **Create Miniprogram**
   ```bash
-  birdcli miniprogram create
+  birdcli miniprogram init
   ```
 
 - **Release Miniprogram**
@@ -228,7 +228,7 @@ sudo mv birdcli /usr/local/bin/ && \
 birdcli --version
 
 
-#### Releaee 
+#### Release
 export GITHUB_TOKEN=
 
 git tag v1.0.5 
