@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/miniprogram"
 	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/manifoldco/promptui"
@@ -29,7 +30,7 @@ var createMiniprogramCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Create a miniprogram",
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient := mustGetAuth()
+		ctx, apiClient := auth.MustGetAuth()
 
 		config, _ := miniprogram.GetConfig()
 

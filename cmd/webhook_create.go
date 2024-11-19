@@ -6,6 +6,7 @@ import (
 	"log"
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
+	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/spf13/cobra"
 )
@@ -16,7 +17,7 @@ var createWebhookCmd = &cobra.Command{
 	Use:   "create",
 	Short: "Create a webhook",
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient := mustGetAuth()
+		ctx, apiClient := auth.MustGetAuth()
 
 		log.Println("Creating webhook.")
 

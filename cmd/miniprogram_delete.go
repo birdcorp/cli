@@ -3,6 +3,7 @@ package cmd
 import (
 	"log"
 
+	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/spf13/cobra"
 )
 
@@ -12,7 +13,7 @@ var deleteMiniprogramCmd = &cobra.Command{
 	Short: "Delete a miniprogram",
 	Args:  cobra.ExactArgs(1), // Ensure exactly one argument is provided
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient := mustGetAuth()
+		ctx, apiClient := auth.MustGetAuth()
 
 		appID := args[0] // Get the app ID from the arguments
 		log.Println("Deleting miniprogram with ID:", appID)

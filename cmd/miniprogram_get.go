@@ -3,6 +3,7 @@ package cmd
 import (
 	"log"
 
+	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/spf13/cobra"
 )
@@ -14,7 +15,7 @@ var getMiniprogramCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		appID := args[0] // Retrieve the appID argument
 
-		ctx, apiClient := mustGetAuth()
+		ctx, apiClient := auth.MustGetAuth()
 
 		miniprogram, _, err := apiClient.MiniprogramAPI.
 			GetMiniprogram(ctx, appID).
@@ -27,4 +28,4 @@ var getMiniprogramCmd = &cobra.Command{
 	},
 }
 
-// go run main.go miniprogram init
+// go run main.go miniprograms get <appID>

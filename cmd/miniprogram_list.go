@@ -1,9 +1,12 @@
 package cmd
 
 import (
+	"fmt"
 	"log"
 
+	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/prettyprint"
+	"github.com/fatih/color"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
@@ -12,13 +15,14 @@ var listMiniprogramCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all miniprograms",
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient := mustGetAuth()
+		ctx, apiClient := auth.MustGetAuth()
 
 		miniprograms, _, err := apiClient.MiniprogramAPI.
 			ListMiniprograms(ctx).
 			Execute()
 		if err != nil {
-			log.Fatalf("Error listing miniprograms: %v", err)
+			fmt.Printf("%s Failed to list miniprogram:\n", color.RedString("❌"))
+			return
 		}
 
 		prettyprint.JSON(miniprograms)

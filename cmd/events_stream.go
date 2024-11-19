@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
+	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -18,7 +19,7 @@ var streamEventsCmd = &cobra.Command{
 	Use:   "stream",
 	Short: "Stream events",
 	Run: func(cmd *cobra.Command, args []string) {
-		apiKey, err := getAPIKey() // Assuming getAPIKey() is defined elsewhere in your code
+		apiKey, err := auth.GetAPIKey() // Assuming getAPIKey() is defined elsewhere in your code
 		if err != nil {
 			log.Fatalf("Error getting API key: %v", err)
 		}

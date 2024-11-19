@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
@@ -23,11 +24,12 @@ var accountLoginCmd = &cobra.Command{
 			log.Fatalf("Prompt failed %v\n", err)
 		}
 
-		err = saveAPIKey(apiKey)
+		err = auth.SaveAPIKey(apiKey)
 		if err != nil {
 			fmt.Printf("Error saving API key: %v\n", err)
 		} else {
 			fmt.Println("API key saved successfully!")
 		}
+
 	},
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/spf13/cobra"
 )
 
@@ -13,7 +14,7 @@ var deleteWebhookCmd = &cobra.Command{
 	Use:   "delete",
 	Short: "Delete a webhook",
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient := mustGetAuth()
+		ctx, apiClient := auth.MustGetAuth()
 
 		_, err := apiClient.WebhooksAPI.
 			DeleteWebhook(ctx, webhookID).

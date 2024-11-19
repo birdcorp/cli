@@ -3,6 +3,7 @@ package cmd
 import (
 	"log"
 
+	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/spf13/cobra"
 )
@@ -15,7 +16,7 @@ var getCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		orderID := args[0] // Retrieve the orderID argument
 
-		ctx, apiClient := mustGetAuth()
+		ctx, apiClient := auth.MustGetAuth()
 
 		order, _, err := apiClient.OrdersAPI.
 			GetOrder(ctx, orderID).

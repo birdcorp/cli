@@ -7,8 +7,10 @@ import (
 	"strings"
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
+	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/open"
 	"github.com/birdcorp/cli/pkg/prettyprint"
+	"github.com/manifoldco/promptui"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -23,7 +25,7 @@ var createCmd = &cobra.Command{
 Example:
   bird orders create --total-value "10.99" --currency "USD" --line-items '[{"label":"Item1","value":"10.99"}]'`,
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient := mustGetAuth()
+		ctx, apiClient := auth.MustGetAuth()
 
 		// Parse and validate the line items JSON
 		var lineItems []birdsdk.LineItem
@@ -39,10 +41,6 @@ Example:
 
 		// Validate currency
 		currency := birdsdk.Currency(viper.GetString("currency"))
-		if !isValidCurrency(string(currency)) {
-			pterm.Error.Printf("Invalid currency: %s\n", currency)
-			log.Fatal("Please provide a valid currency code (e.g., USD, EUR, GBP)")
-		}
 
 		// Construct order payload
 		orderPayload := birdsdk.OrderPayload{
@@ -76,9 +74,15 @@ Example:
 
 		prettyprint.JSON(order)
 
-		// Open order link in browser
-		if err := open.Browser(response.Link); err != nil {
-			pterm.Warning.Printf("Failed to open order link in browser: %v\n", err)
+		// Prompt user to open order link in browser
+		prompt := promptui.Prompt{
+			Label:     "Press Enter to open order link in browser",
+			IsConfirm: true,
+		}
+		if _, err := prompt.Run(); err == nil {
+			if err := open.Browser(response.Link); err != nil {
+				pterm.Warning.Printf("Failed to open order link in browser: %v\n", err)
+			}
 		}
 	},
 }
@@ -116,17 +120,6 @@ func handleAPIError(err error, httpRes *http.Response) {
 	} else {
 		pterm.Error.Printf("Error: %s\n", err.Error())
 	}
-}
-
-// isValidCurrency checks if the provided currency code is valid
-func isValidCurrency(currency string) bool {
-	validCurrencies := map[string]bool{
-		"USD": true,
-		"EUR": true,
-		"GBP": true,
-		// Add more currencies as needed
-	}
-	return validCurrencies[currency]
 }
 
 /*

@@ -4,10 +4,14 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"net/http"
+	"os"
+	"text/tabwriter"
 	"time"
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
-	"github.com/birdcorp/cli/pkg/prettyprint"
+	"github.com/birdcorp/cli/pkg/auth"
+	"github.com/fatih/color"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
@@ -24,13 +28,14 @@ var couponCreateCmd = &cobra.Command{
 	Use:   "create",
 	Short: "Create a new coupon",
 	Long:  `Create a new coupon with specified amount and expiry date.`,
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, apiClient := mustGetAuth()
+	Run: func(cmd *cobra.Command, args []string) {
+		ctx, apiClient := auth.MustGetAuth()
 
 		// Get code from flag or prompt
 		code, err := cmd.Flags().GetString("code")
 		if err != nil {
-			return fmt.Errorf("error getting code flag: %v", err)
+			log.Println("Error retrieving coupon code flag:", err)
+			return
 		}
 		if code == "" {
 			prompt := promptui.Prompt{
@@ -38,14 +43,61 @@ var couponCreateCmd = &cobra.Command{
 			}
 			code, err = prompt.Run()
 			if err != nil {
-				return fmt.Errorf("prompt failed: %v", err)
+				log.Println("Error during coupon code prompt:", err)
+				return
 			}
+		}
+
+		// Get type from flag or prompt
+		cType, err := cmd.Flags().GetString("type")
+		if err != nil {
+			log.Println("Error retrieving coupon type flag:", err)
+			return
+		}
+		if cType == "" {
+			prompt := promptui.Select{
+				Label: "Select coupon type",
+				Items: []string{"fixed_amount", "percentage"},
+			}
+			_, cType, err = prompt.Run()
+			if err != nil {
+				log.Println("Error during coupon type prompt:", err)
+				return
+			}
+		}
+
+		var discountPrompt string
+
+		switch cType {
+		case "fixed_amount":
+			discountPrompt = "Enter discount amount"
+		case "percentage":
+			discountPrompt = "Enter discount percentage"
+		}
+
+		// Get discount from flag or prompt
+		discount, err := cmd.Flags().GetFloat32("discount")
+		if err != nil {
+			log.Println("Error retrieving discount flag:", err)
+			return
+		}
+		if discount == 0 {
+			prompt := promptui.Prompt{
+				Label: discountPrompt,
+			}
+			discountStr, err := prompt.Run()
+			if err != nil {
+				log.Println("Error during discount prompt:", err)
+				return
+			}
+			fmt.Sscanf(discountStr, "%f", &discount)
 		}
 
 		// Get amount from flag or prompt
 		amount, err := cmd.Flags().GetFloat32("amount")
 		if err != nil {
-			return fmt.Errorf("error getting amount flag: %v", err)
+			log.Println("Error retrieving amount flag:", err)
+			return
 		}
 		if amount == 0 {
 			prompt := promptui.Prompt{
@@ -53,49 +105,78 @@ var couponCreateCmd = &cobra.Command{
 			}
 			amountStr, err := prompt.Run()
 			if err != nil {
-				return fmt.Errorf("prompt failed: %v", err)
+				log.Println("Error during amount prompt:", err)
+				return
 			}
 			fmt.Sscanf(amountStr, "%f", &amount)
 		}
 
-		// Get discount from flag or prompt
-		discount, err := cmd.Flags().GetFloat32("discount")
+		var coupon *birdsdk.CouponCode
+		var resp *http.Response
+
+		switch cType {
+		case "fixed_amount":
+			coupon, resp, err = apiClient.CouponCodesAPI.
+				CreateCouponCode(ctx).
+				CreateCouponRequest(birdsdk.CreateCouponRequest{
+					Code:           code,
+					Type:           birdsdk.CouponType(cType),
+					AmountIssued:   int32(amount),
+					ExpiryDate:     couponExpiryDate,
+					DiscountAmount: &discount,
+				}).
+				Execute()
+		case "percentage":
+			coupon, resp, err = apiClient.CouponCodesAPI.
+				CreateCouponCode(ctx).
+				CreateCouponRequest(birdsdk.CreateCouponRequest{
+					Code:            code,
+					Type:            birdsdk.CouponType(cType),
+					AmountIssued:    int32(amount),
+					ExpiryDate:      couponExpiryDate,
+					DiscountPercent: &discount,
+				}).
+				Execute()
+		}
 		if err != nil {
-			return fmt.Errorf("error getting discount flag: %v", err)
-		}
-		if discount == 0 {
-			prompt := promptui.Prompt{
-				Label: "Enter discount amount",
+			log.Println("Error creating coupon code:", err)
+			if resp != nil && resp.Body != nil {
+				body, _ := io.ReadAll(resp.Body)
+				log.Printf("Response body: %s\n", string(body))
 			}
-			discountStr, err := prompt.Run()
-			if err != nil {
-				return fmt.Errorf("prompt failed: %v", err)
-			}
-			fmt.Sscanf(discountStr, "%f", &discount)
+			return
 		}
 
-		log.Println("Creating new fixed amount coupon code...")
+		fmt.Printf("\n%s\n\n", color.GreenString("✅ Coupon Created"))
 
-		coupon, resp, err := apiClient.CouponCodesAPI.
-			CreateCouponCode(ctx).
-			CreateCouponRequest(birdsdk.CreateCouponRequest{
-				Code:           code,
-				Type:           birdsdk.CouponType("fixed_amount"),
-				AmountIssued:   int32(amount),
-				ExpiryDate:     couponExpiryDate,
-				DiscountAmount: &discount,
-			}).
-			Execute()
+		w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
 
-		if err != nil {
-			body, _ := io.ReadAll(resp.Body)
-			log.Printf("Response body: %s\n", string(body))
-			return fmt.Errorf("failed to create coupon: %v", err)
+		switch cType {
+		case "fixed_amount":
+			fmt.Fprintln(w, "Code\tDiscount Amount\tExpiry Date\tID\tRemaining\tType\tAmount Issued")
+			fmt.Fprintf(w, "%s\t%.2f\t%s\t%s\t%.2f\t%s\t%.2f\n",
+				*coupon.Code,
+				*coupon.DiscountAmount,
+				coupon.ExpiryDate.String(),
+				*coupon.Id,
+				float64(*coupon.Remaining),
+				*coupon.Type.Ptr(),
+				float64(*coupon.AmountIssued),
+			)
+		case "percentage":
+			fmt.Fprintln(w, "Code\tDiscount Percent\tExpiry Date\tID\tRemaining\tType\tAmount Issued")
+			fmt.Fprintf(w, "%s\t%.2f\t%s\t%s\t%.2f\t%s\t%.2f\n",
+				*coupon.Code,
+				*coupon.DiscountPercent,
+				coupon.ExpiryDate.String(),
+				*coupon.Id,
+				float64(*coupon.Remaining),
+				*coupon.Type.Ptr(),
+				float64(*coupon.AmountIssued),
+			)
 		}
 
-		log.Println("Successfully created fixed amount coupon code. Response:")
-		prettyprint.JSON(coupon)
-		return nil
+		w.Flush()
 	},
 }
 
@@ -103,6 +184,7 @@ func init() {
 	couponCmd.AddCommand(couponCreateCmd)
 
 	couponCreateCmd.Flags().String("code", "", "Coupon code")
+	couponCreateCmd.Flags().String("type", "", "Coupon type") // Added missing flag definition
 	couponCreateCmd.Flags().Float32("amount", 0, "Amount issued")
 	couponCreateCmd.Flags().Float32("discount", 0, "Discount amount")
 }

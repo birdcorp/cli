@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 
+	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/spf13/cobra"
 )
@@ -13,7 +14,7 @@ var listWebhooksCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List webhooks",
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient := mustGetAuth()
+		ctx, apiClient := auth.MustGetAuth()
 
 		webhooks, httpRes, err := apiClient.WebhooksAPI.
 			ListWebhooks(ctx).

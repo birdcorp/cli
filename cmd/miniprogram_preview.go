@@ -4,6 +4,7 @@ import (
 	"log"
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
+	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/open"
 	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/manifoldco/promptui"
@@ -35,7 +36,7 @@ var miniprogramPreviewCmd = &cobra.Command{
 			log.Fatalf("Error getting name input: %v", err)
 		}
 
-		ctx, apiClient := mustGetAuth()
+		ctx, apiClient := auth.MustGetAuth()
 
 		preview, _, err := apiClient.MiniprogramAPI.
 			CreateMiniProgramPreview(ctx).

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/miniprogram"
 	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/spf13/cobra"
@@ -13,7 +14,7 @@ var miniprogramReleasesListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List miniprogram releases",
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx, apiClient := mustGetAuth()
+		ctx, apiClient := auth.MustGetAuth()
 
 		config, err := miniprogram.GetConfig()
 		if err != nil {
