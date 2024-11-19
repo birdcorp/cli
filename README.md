@@ -205,35 +205,13 @@ ngrok http 3000
 
 
 
-##### Development 
-
-npm install -g .
-
-
-which birdcli
-
-
-npm install -g birdcli-alpha
-
-#### Uninstall
-```
-npm uninstall -g birdcli-alpha
-
-
-
-
-curl -L https://github.com/birdcorp/cli/releases/download/v1.0.6/birdcli_Darwin_x86_64.tar.gz -o birdcli_Darwin_x86_64.tar.gz && \
-tar -xvf birdcli_Darwin_x86_64.tar.gz && \
-sudo mv birdcli /usr/local/bin/ && \
-birdcli --version
-
 
 #### Release
-export GITHUB_TOKEN=
+export GITHUB_TOKEN=<token>
 
-git tag v1.0.5 
+git tag v1.0.xxx
 
-git push origin v1.0.5 
+git push origin v1.0.xxx
 
 goreleaser release --config .goreleaser/mac.yml --clean
 
