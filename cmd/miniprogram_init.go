@@ -42,7 +42,7 @@ var createMiniprogramCmd = &cobra.Command{
 
 			result, err := prompt.Run()
 			if err != nil {
-				log.Fatalf("Prompt failed %v\n", err)
+				log.Fatalf("Prompt failed to initialize miniprogram: %v\n", err)
 			}
 
 			if result == "y" {
@@ -71,6 +71,7 @@ var createMiniprogramCmd = &cobra.Command{
 			description = promptUser("Enter miniprogram description")
 		}
 
+		// eg.  ./build, dist
 		buildDir, err := cmd.Flags().GetString("build-directory")
 		if err != nil {
 			log.Fatal("Error getting build-directory flag:", err)

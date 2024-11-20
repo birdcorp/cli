@@ -45,6 +45,22 @@ brew tap birdcorp/homebrew-bird-cli
 brew install birdcli
 ```
 
+#### Curl
+```sh
+curl -sL https://gist.githubusercontent.com/andyfen/64296525a465dd1f9cab7528f236c6b3/raw/be96fe8ab3c5fc962777c6192bceb0ee0eafd646/gistfile1.txt | sh
+```
+
+
+### Update
+```sh       
+brew update
+
+brew upgrade birdcli
+```
+
+
+
+
 
 ## Authentication
 
