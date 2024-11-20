@@ -34,16 +34,16 @@ Bird CLI is a command line interface for managing BirdPay merchant services, inc
 - Cross-platform support
 
 
-## Install
+## Install the CLI
 
 
-### Curl
+- ### Curl
 ```sh
 curl -sL https://link.birdwallet.xyz/cli | sh
 ```
 
 
-### Homebrew
+- ### Homebrew
 ```sh
 brew update
 
@@ -52,8 +52,7 @@ brew tap birdcorp/homebrew-bird-cli
 brew install birdcli
 ```
 
-
-### Update
+Update
 ```sh       
 brew update
 
