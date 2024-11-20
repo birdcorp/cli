@@ -36,6 +36,13 @@ Bird CLI is a command line interface for managing BirdPay merchant services, inc
 
 ## Install
 
+
+#### Curl
+```sh
+curl -sL https://link.birdwallet.xyz/cli | sh
+```
+
+
 ### Homebrew
 ```sh
 brew update
@@ -43,11 +50,6 @@ brew update
 brew tap birdcorp/homebrew-bird-cli
 
 brew install birdcli
-```
-
-#### Curl
-```sh
-curl -sL https://gist.githubusercontent.com/andyfen/64296525a465dd1f9cab7528f236c6b3/raw/be96fe8ab3c5fc962777c6192bceb0ee0eafd646/gistfile1.txt | sh
 ```
 
 
