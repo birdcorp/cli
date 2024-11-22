@@ -72,7 +72,7 @@ curl -sL https://link.birdwallet.xyz/cli | sh
 ## 🔑 Authentication
 
 ### Login
-Authenticate with your API_KEY to access Bird CLI features:
+Authenticate with your `API_KEY` to access Bird CLI features:
 
   ```bash
   birdcli login
@@ -235,18 +235,18 @@ Stream live events:
 To create a new release:
 
 1. Authenticate with GitHub:
-   ```bash
+  ```bash
   export GITHUB_TOKEN=<your_github_token>
   ```
 2. Tag the release version:
-   ```bash
+  ```bash
   git tag v1.0.x
   git push origin v1.0.x
   ```
 3. Build and publish the release:
-   ```bash
-   goreleaser release --config .goreleaser/mac.yml --clean
-   ```
+  ```bash
+  goreleaser release --config .goreleaser/mac.yml --clean
+  ```
 
 <br/>
 
