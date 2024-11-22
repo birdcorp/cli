@@ -12,7 +12,7 @@
     to generating miniprogram previews, Bird CLI is your all-in-one tool for seamless merchant operations.
   </p>
   <h2>
-    <a href="https://demo.docuseal.tech">📚 Documentation</a>
+    <a href="https://docs-openapi.onrender.com">📚 Documentation</a>
     <span>|</span>
     <a href="https://docuseal.com/sign_up">🚀 Examples</a>
   </h2>
