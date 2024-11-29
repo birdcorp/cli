@@ -5,9 +5,11 @@ import (
 	"log"
 	"os"
 	"text/tabwriter"
+	"time"
 
 	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/formatting"
+	"github.com/briandowns/spinner"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
@@ -19,13 +21,19 @@ var couponListCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, apiClient := auth.MustGetAuth()
 
+		s := spinner.New(spinner.CharSets[14], 100*time.Millisecond)
+		s.Suffix = " Fetching coupons..."
+		s.Start()
+
 		coupons, _, err := apiClient.CouponCodesAPI.
 			ListCouponCodes(ctx).
 			Execute()
 		if err != nil {
+			s.Stop()
 			log.Fatalf("Error listing coupons: %v", err)
 			return
 		}
+		s.Stop()
 
 		fmt.Printf("\n%s\n\n", color.CyanString("🎟️  Coupons"))
 		w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)

@@ -9,6 +9,7 @@ import (
 	"github.com/birdcorp/cli/pkg/filesystem"
 	"github.com/birdcorp/cli/pkg/miniprogram"
 	"github.com/birdcorp/cli/pkg/prettyprint"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -22,7 +23,8 @@ var publishMiniprogramCmd = &cobra.Command{
 
 		config, err := miniprogram.GetConfig()
 		if err != nil {
-			log.Fatalf("Error getting miniprogram config: %v", err)
+			fmt.Printf("%s\n", color.RedString("Missing miniprogram config. Please run 'birdcli miniprograms init' to create one."))
+			os.Exit(1)
 			return
 		}
 

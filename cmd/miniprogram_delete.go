@@ -18,11 +18,16 @@ var deleteMiniprogramCmd = &cobra.Command{
 		appID := args[0] // Get the app ID from the arguments
 		log.Println("Deleting miniprogram with ID:", appID)
 
-		_, err := apiClient.MiniprogramAPI.
+		resp, err := apiClient.MiniprogramAPI.
 			DeleteMiniprogram(ctx, appID).
 			Execute()
+
 		if err != nil {
 			log.Fatalf("Error deleting miniprogram: %v", err)
+		}
+
+		if resp.StatusCode != 204 {
+			log.Fatalf("Unexpected status code: %d", resp.StatusCode)
 		}
 
 		log.Println("Miniprogram deleted successfully.")

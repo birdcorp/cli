@@ -5,9 +5,11 @@ import (
 	"log"
 	"os"
 	"text/tabwriter"
+	"time"
 
 	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/ptr"
+	"github.com/briandowns/spinner"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
@@ -20,12 +22,18 @@ var accountCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, apiClient := auth.MustGetAuth()
 
+		s := spinner.New(spinner.CharSets[14], 100*time.Millisecond)
+		s.Suffix = " Fetching account information..."
+		s.Start()
+
 		account, _, err := apiClient.AccountAPI.
 			GetAccount(ctx).
 			Execute()
 		if err != nil {
+			s.Stop()
 			log.Fatal(err)
 		}
+		s.Stop()
 
 		fmt.Printf("\n%s\n\n", color.CyanString("👨‍💼 Account Information"))
 		w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)

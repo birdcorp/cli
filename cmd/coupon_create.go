@@ -11,6 +11,7 @@ import (
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
 	"github.com/birdcorp/cli/pkg/auth"
+	"github.com/briandowns/spinner"
 	"github.com/fatih/color"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
@@ -111,8 +112,35 @@ var couponCreateCmd = &cobra.Command{
 			fmt.Sscanf(amountStr, "%f", &amount)
 		}
 
+		// Get expiry date from flag or prompt
+		expiryStr, err := cmd.Flags().GetString("expiry")
+		if err != nil {
+			log.Println("Error retrieving expiry date flag:", err)
+			return
+		}
+		var expiryDate time.Time
+		if expiryStr == "" {
+			prompt := promptui.Prompt{
+				Label: "Enter expiry date (YYYY-MM-DD)",
+			}
+			expiryStr, err = prompt.Run()
+			if err != nil {
+				log.Println("Error during expiry date prompt:", err)
+				return
+			}
+		}
+		expiryDate, err = time.Parse("2006-01-02", expiryStr)
+		if err != nil {
+			log.Printf("Invalid date format. Please use YYYY-MM-DD: %v\n", err)
+			return
+		}
+
 		var coupon *birdsdk.CouponCode
 		var resp *http.Response
+
+		s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
+		s.Suffix = " Creating coupon..."
+		s.Start()
 
 		switch cType {
 		case "fixed_amount":
@@ -122,7 +150,7 @@ var couponCreateCmd = &cobra.Command{
 					Code:           code,
 					Type:           birdsdk.CouponType(cType),
 					AmountIssued:   int32(amount),
-					ExpiryDate:     couponExpiryDate,
+					ExpiryDate:     expiryDate,
 					DiscountAmount: &discount,
 				}).
 				Execute()
@@ -133,11 +161,14 @@ var couponCreateCmd = &cobra.Command{
 					Code:            code,
 					Type:            birdsdk.CouponType(cType),
 					AmountIssued:    int32(amount),
-					ExpiryDate:      couponExpiryDate,
+					ExpiryDate:      expiryDate,
 					DiscountPercent: &discount,
 				}).
 				Execute()
 		}
+
+		s.Stop()
+
 		if err != nil {
 			log.Println("Error creating coupon code:", err)
 			if resp != nil && resp.Body != nil {
@@ -157,7 +188,7 @@ var couponCreateCmd = &cobra.Command{
 			fmt.Fprintf(w, "%s\t%.2f\t%s\t%s\t%.2f\t%s\t%.2f\n",
 				*coupon.Code,
 				*coupon.DiscountAmount,
-				coupon.ExpiryDate.String(),
+				coupon.ExpiryDate.Format("2006-01-02"),
 				*coupon.Id,
 				float64(*coupon.Remaining),
 				*coupon.Type.Ptr(),
@@ -168,7 +199,7 @@ var couponCreateCmd = &cobra.Command{
 			fmt.Fprintf(w, "%s\t%.2f\t%s\t%s\t%.2f\t%s\t%.2f\n",
 				*coupon.Code,
 				*coupon.DiscountPercent,
-				coupon.ExpiryDate.String(),
+				coupon.ExpiryDate.Format("2006-01-02"),
 				*coupon.Id,
 				float64(*coupon.Remaining),
 				*coupon.Type.Ptr(),
@@ -184,13 +215,14 @@ func init() {
 	couponCmd.AddCommand(couponCreateCmd)
 
 	couponCreateCmd.Flags().String("code", "", "Coupon code")
-	couponCreateCmd.Flags().String("type", "", "Coupon type") // Added missing flag definition
+	couponCreateCmd.Flags().String("type", "", "Coupon type")
 	couponCreateCmd.Flags().Float32("amount", 0, "Amount issued")
 	couponCreateCmd.Flags().Float32("discount", 0, "Discount amount")
+	couponCreateCmd.Flags().String("expiry", "", "Expiry date (YYYY-MM-DD)")
 }
 
 /*
 
-go run main.go coupon create --code FIXED10 --amount 10 --discount 10
+go run main.go coupon create --code FIXED10 --amount 10 --discount 10 --expiry 2024-12-31
 
 */

@@ -24,6 +24,8 @@ func Execute() {
 }
 
 func init() {
+	RootCmd.AddCommand(getCmd)
+
 	RootCmd.SetHelpTemplate(`
 Before using the CLI, you'll need to login:
 

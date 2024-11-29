@@ -9,7 +9,7 @@ import (
 )
 
 // getCmd represents the get subcommand
-var getCmd = &cobra.Command{
+var getOrderCmd = &cobra.Command{
 	Use:   "retrieve <id>",
 	Short: "Retrieve an order by ID",
 	Args:  cobra.ExactArgs(1), // Ensure exactly one argument is provided

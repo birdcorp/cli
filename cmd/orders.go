@@ -12,7 +12,7 @@ var ordersCmd = &cobra.Command{
 func init() {
 	// Add the subcommands to the orders command
 	ordersCmd.AddCommand(createCmd)
-	ordersCmd.AddCommand(getCmd)
+	ordersCmd.AddCommand(getOrderCmd)
 	ordersCmd.AddCommand(listCmd)
 
 	// Add the orders command to the root command
