@@ -10,7 +10,7 @@ builds:
       - arm64  # Target ARM-based architecture for Apple Silicon Macs
     ldflags:
       - -s -w
-      - "-X 'cmd.version={{.Version}}'" # Embeds the version using the Git tag
+      - "-X 'github.com/birdcorp/cli/cmd.version={{.Version}}'" # Embeds the version using the Git tag
     binary: birdcli  # Output binary file name
 
 # Archives configuration for packaging the binary

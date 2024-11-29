@@ -19,3 +19,5 @@ var versionCmd = &cobra.Command{
 func init() {
 	RootCmd.AddCommand(versionCmd)
 }
+
+// go build -ldflags="-X 'github.com/birdcorp/cli/cmd.version=v1.2.3'" -o birdcli
