@@ -8,7 +8,9 @@ builds:
       - darwin  # Only macOS for now
     goarch:
       - arm64  # Target ARM-based architecture for Apple Silicon Macs
-    ldflags: -s -w  # Strips debugging symbols
+    ldflags:
+      - -s -w
+      - "-X 'cmd.version={{.Version}}'" # Embeds the version using the Git tag
     binary: birdcli  # Output binary file name
 
 # Archives configuration for packaging the binary
