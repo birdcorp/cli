@@ -34,7 +34,7 @@
 
 <br/>
 
-## 🚀 Installation
+## 📦 Installation
 
 Install Bird CLI using a single command:
 
@@ -149,7 +149,7 @@ List all orders:
 
 Create a miniapp preview to generate a scannable link. You can use ngrok for local testing or provide a staging URL:
   ```bash
-  birdcli miniapps preview \
+  birdcli miniapp preview \
     --url <preview_url> \
     --name <name>
   ```
