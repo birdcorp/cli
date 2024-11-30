@@ -95,7 +95,13 @@ View account details:
   birdcli account
   ```
 
+### Get a resource
 
+Get a resource by ID: order, coupon, webhook, miniapp
+
+  ```bash
+  birdcli get <identifier>
+  ```
 
 ### Orders
 
@@ -135,29 +141,27 @@ List all orders:
   birdcli orders list
   ```
 
-Retrieve an order by ID:
-  ```bash
-  birdcli orders retrieve <orderID>
-  ```
-
-Delete an order:
-  ```bash
-  birdcli orders delete <orderID>
-  ```
-
 <br/>
 
 ### Mini-Apps
 
-Initialize a miniapp:
+Development:
+
+Create a miniapp preview to generate a scannable link. You can use ngrok for local testing or provide a staging URL:
+  ```bash
+  birdcli miniapps preview \
+    --url <preview_url> \
+    --name <name>
+  ```
+
+
+Production:
+
+Initialize a Miniapp config:
   ```bash
   birdcli miniapp init
   ```
 
-Create a miniapp preview:
-  ```bash
-  birdcli miniapps create-preview --url <preview_url> --name <name>
-  ```
 
 Publish a miniapp:
   ```bash
