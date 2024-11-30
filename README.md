@@ -196,6 +196,10 @@ Initialize a miniapp configuration to create a configurable `miniapp.config.json
 }
 ```
 
+<br/>
+
+**📤 Publish for review** 
+
 To publish a miniapp, run the following command in the directory containing the `miniapp.config.json` file. Note that you must update the version in the `miniapp.config.json` file before each publish:
 
   ```bash
