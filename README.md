@@ -162,7 +162,38 @@ Initialize a miniapp configuration to create a configurable `miniapp.config.json
   ```bash
   birdcli miniapp init
   ```
-
+  
+```
+{
+  "appInfo": {
+    "appID": "180c9ec28117dc63",
+    "name": "Minesweeper",
+    "version": "1.0.0",
+    "description": "Play minesweeper",
+    "tags": []
+  },
+  "appearance": {
+    "backgroundColor": "#000000",
+    "foregroundColor": "#FFFFFF",
+    "navBackgroundColor": "transparent",
+    "navTextColor": "light"
+  },
+  "build": {
+    "buildDirectory": "_build"
+  },
+  "assets": {
+    "appIcon": "./app-icon.png"
+  },
+  "users": {
+    "testers": []
+  },
+  "configuration": {
+    "defaultLanguage": "en",
+    "privacyPolicyUrl": "https://myapp.com/privacy",
+    "termsOfServiceUrl": "https://myapp.com/terms"
+  }
+}
+```
 
 To publish a miniapp, run the following command in the directory containing the `miniapp.config.json` file. Note that you must update the version in the `miniapp.config.json` file before each publish:
 
