@@ -145,7 +145,7 @@ List all orders:
 
 ### Mini-Apps
 
-**Development**
+**🛠️ Development** 
 
 Create a miniapp preview to generate a scannable link. You can use ngrok for local testing or provide a staging URL:
   ```bash
@@ -156,7 +156,7 @@ Create a miniapp preview to generate a scannable link. You can use ngrok for loc
 
 <br/>
 
-**Production**
+**🚀 Production**
 
 Initialize a miniapp configuration to create a configurable `miniapp.config.json` file in your current directory.
 
