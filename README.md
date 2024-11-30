@@ -157,13 +157,15 @@ Create a miniapp preview to generate a scannable link. You can use ngrok for loc
 
 **Production**
 
-Initialize a miniapp config:
+Initialize a miniapp configuration to create a configurable `miniapp.config.json` file in your current directory.
+
   ```bash
   birdcli miniapp init
   ```
 
 
-Publish a miniapp:
+To publish a miniapp, run the following command in the directory containing the `miniapp.config.json` file. Note that you must update the version in the `miniapp.config.json` file before each publish:
+
   ```bash
   birdcli miniapp publish
   ```
