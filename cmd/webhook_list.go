@@ -1,10 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-	"io"
-	"log"
-
 	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/printer"
 	"github.com/spf13/cobra"
@@ -16,21 +12,12 @@ var listWebhooksCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, apiClient := auth.MustGetAuth()
 
-		webhooks, httpRes, err := apiClient.WebhooksAPI.
+		webhooks, resp, err := apiClient.WebhooksAPI.
 			ListWebhooks(ctx).
 			Execute()
 		if err != nil {
-			if httpRes != nil {
-				if httpRes.Body != nil {
-					body, err := io.ReadAll(httpRes.Body)
-					if err == nil {
-						fmt.Println(string(body)) // Print the HTTP response body for error details
-					} else {
-						fmt.Println("Error reading response body:", err)
-					}
-				}
-			}
-			log.Fatalf("Error listing webhooks: %v", err)
+			printer.HandleAPIFailure(resp)
+			return
 		}
 
 		printer.WebhookList(webhooks.Data)

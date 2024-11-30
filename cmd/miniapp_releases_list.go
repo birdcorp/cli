@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/birdcorp/cli/pkg/auth"
@@ -21,11 +20,11 @@ var miniappReleasesListCmd = &cobra.Command{
 			log.Fatal(err)
 		}
 
-		releases, _, err := apiClient.MiniprogramAPI.
+		releases, resp, err := apiClient.MiniprogramAPI.
 			ListMiniprogramReleases(ctx, config.AppInfo.AppID).
 			Execute()
 		if err != nil {
-			fmt.Println("Error listing miniapp releases:", err)
+			printer.HandleAPIFailure(resp)
 			return
 		}
 

@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/birdcorp/cli/pkg/auth"
+	"github.com/birdcorp/cli/pkg/printer"
 	"github.com/spf13/cobra"
 )
 
@@ -23,11 +24,8 @@ var deleteMiniappCmd = &cobra.Command{
 			Execute()
 
 		if err != nil {
-			log.Fatalf("Error deleting miniapp: %v", err)
-		}
-
-		if resp.StatusCode != 204 {
-			log.Fatalf("Unexpected status code: %d", resp.StatusCode)
+			printer.HandleAPIFailure(resp)
+			return
 		}
 
 		log.Println("Miniapp deleted successfully.")

@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/birdcorp/cli/pkg/auth"
+	"github.com/birdcorp/cli/pkg/printer"
 	"github.com/spf13/cobra"
 )
 
@@ -16,11 +16,12 @@ var deleteWebhookCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, apiClient := auth.MustGetAuth()
 
-		_, err := apiClient.WebhooksAPI.
+		resp, err := apiClient.WebhooksAPI.
 			DeleteWebhook(ctx, webhookID).
 			Execute()
 		if err != nil {
-			log.Fatalf("Error deleting webhook: %v", err)
+			printer.HandleAPIFailure(resp)
+			return
 		}
 
 		fmt.Println("Webhook deleted successfully")

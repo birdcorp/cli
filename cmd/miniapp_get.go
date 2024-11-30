@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"log"
-
 	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/printer"
 	"github.com/spf13/cobra"
@@ -17,11 +15,12 @@ var getMiniappCmd = &cobra.Command{
 
 		ctx, apiClient := auth.MustGetAuth()
 
-		miniapp, _, err := apiClient.MiniprogramAPI.
+		miniapp, resp, err := apiClient.MiniprogramAPI.
 			GetMiniprogram(ctx, appID).
 			Execute()
 		if err != nil {
-			log.Fatalf("Error getting miniapp: %v", err)
+			printer.HandleAPIFailure(resp)
+			return
 		}
 
 		printer.Miniapp(miniapp)

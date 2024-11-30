@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"io"
 	"log"
 
 	"github.com/birdcorp/cli/pkg/auth"
@@ -30,11 +29,7 @@ var getMiniappInfoCmd = &cobra.Command{
 		if err != nil {
 			fmt.Printf("%s Failed to get miniapp:\n", color.RedString("❌"))
 
-			body, err := io.ReadAll(resp.Body)
-			if err != nil {
-				log.Fatalf("Error reading response body: %v", err)
-			}
-			fmt.Println("Response Body:", string(body))
+			printer.HandleAPIFailure(resp)
 			return
 		}
 		printer.Miniapp(miniapp)

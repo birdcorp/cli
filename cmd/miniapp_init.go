@@ -8,7 +8,7 @@ import (
 	"os"
 
 	"github.com/birdcorp/cli/pkg/auth"
-	miniprogram "github.com/birdcorp/cli/pkg/miniapp"
+	miniapp "github.com/birdcorp/cli/pkg/miniapp"
 	"github.com/fatih/color"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
@@ -16,7 +16,7 @@ import (
 
 const (
 	defaultBuildDir     = "./build"
-	defaultIconURL      = "https://dlkosrb2bmrzf.cloudfront.net/miniprograms/blank-icon.png"
+	defaultIconURL      = "https://dlkosrb2bmrzf.cloudfront.net/miniapps/blank-icon.png"
 	defaultIconPath     = "./app-icon.png"
 	defaultURL          = "https://example.com"
 	defaultBgColor      = "#FFFFFF"
@@ -63,7 +63,7 @@ var createMiniappCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, apiClient := auth.MustGetAuth()
 
-		config, _ := miniprogram.GetConfig()
+		config, _ := miniapp.GetConfig()
 
 		if config != nil {
 			prompt := promptui.Prompt{
@@ -112,7 +112,7 @@ var createMiniappCmd = &cobra.Command{
 
 		// Create local config file
 		appID := response.GetId()
-		if _, err := miniprogram.CreateConfig(appID, name, description, buildDir, defaultIconPath); err != nil {
+		if _, err := miniapp.CreateConfig(appID, name, description, buildDir, defaultIconPath); err != nil {
 			log.Fatalf("%s Error creating config file: %v", color.RedString("✗"), err)
 		}
 

@@ -8,6 +8,7 @@ import (
 	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/fs"
 	"github.com/birdcorp/cli/pkg/miniapp"
+	"github.com/birdcorp/cli/pkg/printer"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
@@ -34,8 +35,6 @@ var publishMiniappCmd = &cobra.Command{
 		err = fs.ZipDir(sourceFile, destinationZip)
 		if err != nil {
 			log.Fatal("Error zipping file:", err)
-		} else {
-			fmt.Println("File successfully zipped!")
 		}
 
 		// Example usage: Upload a file
@@ -68,7 +67,7 @@ var publishMiniappCmd = &cobra.Command{
 			Execute()
 
 		if err != nil {
-			fmt.Println("Error uploading file:", err)
+			printer.HandleAPIFailure(resp)
 			return
 		}
 

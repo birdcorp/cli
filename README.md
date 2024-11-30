@@ -5,10 +5,10 @@
       src="https://payments-webapp-assets-stage.s3.us-west-2.amazonaws.com/bird.png" 
       width="50">
   </a>
-  <h1 style="border-bottom: none;">Bird CLI</h1>
+  <h1 style="border-bottom: none;">BirdPay CLI</h1>
   <h3>A Command-Line Interface for Managing BirdPay Merchant Services</h3>
   <p>
-    Bird CLI is a command-line tool for managing BirdPay merchant operations. It provides functionality for handling orders, accounts, webhooks, and generating miniprogram previews, all in one place to streamline your workflows.
+    Bird CLI is a command-line tool for managing BirdPay merchant operations. It provides functionality for handling orders, accounts, webhooks, and generating miniapp previews, all in one place to streamline your workflows.
   </p>
   <h2>
     <a href="https://docs-openapi.onrender.com">📚 Documentation</a>
@@ -22,7 +22,7 @@
 <br/>
 
 ## ✨ Features
-- Create and test miniprogram previews
+- Create and test miniapp previews
 - Manage merchant accounts and settings
 - API key handling: Login, logout, and secure storage
 - Create and manage orders with customizable line items
@@ -149,34 +149,34 @@ Delete an order:
 
 ### Mini-Apps
 
-Initialize a miniprogram:
+Initialize a miniapp:
   ```bash
-  birdcli miniprogram init
+  birdcli miniapp init
   ```
 
-Create a miniprogram preview:
+Create a miniapp preview:
   ```bash
-  birdcli miniprograms create-preview --url <preview_url> --name <name>
+  birdcli miniapps create-preview --url <preview_url> --name <name>
   ```
 
-Publish a miniprogram:
+Publish a miniapp:
   ```bash
-  birdcli miniprogram publish
+  birdcli miniapp publish
   ```
   
 Get Miniprogram info
   ```bash
-  birdcli miniprogram get [appID]
+  birdcli miniapp get [appID]
   ```
 
-List all miniprograms:
+List all miniapps:
   ```bash
-  birdcli miniprogram list
+  birdcli miniapp list
   ```
 
 Delete Miniprogram
   ```bash
-  birdcli miniprogram delete <appID>
+  birdcli miniapp delete <appID>
   ```
 
 <br/>
@@ -224,7 +224,7 @@ Stream live events:
   ```
 2. Use the `ngrok` URL to create a preview:
   ```bash
-  birdcli miniprograms create-preview --url <ngrok_url> --name "MyApp"
+  birdcli miniapps create-preview --url <ngrok_url> --name "MyApp"
   ```
 
 <br/>

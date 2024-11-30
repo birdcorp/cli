@@ -13,8 +13,8 @@ const (
 	DefaultNavBgColor   = "#F0F0F0"
 	DefaultNavTextColor = "dark"
 	DefaultLanguage     = "en"
-	DefaultPrivacyURL   = "https://myapp.com/privacy"
-	DefaultTermsURL     = "https://myapp.com/terms"
+	DefaultPrivacyURL   = "https://example.com/privacy"
+	DefaultTermsURL     = "https://example.com/terms"
 	ConfigFileName      = "miniapp.config.json"
 )
 
@@ -48,7 +48,7 @@ type Config struct {
 	} `json:"configuration"`
 }
 
-// GetConfig reads and parses the local miniprogram configuration file
+// GetConfig reads and parses the local miniapp configuration file
 func GetConfig() (*Config, error) {
 	file, err := os.Open(ConfigFileName)
 	if err != nil {

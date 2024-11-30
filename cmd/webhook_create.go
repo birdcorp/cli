@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"io"
 	"log"
 
 	birdsdk "github.com/birdcorp/bird-go-sdk"
@@ -45,23 +44,14 @@ var createWebhookCmd = &cobra.Command{
 			Url: webhookURL,
 		}
 
-		webhook, httpRes, err := apiClient.WebhooksAPI.
+		webhook, resp, err := apiClient.WebhooksAPI.
 			CreateWebhook(ctx).
 			CreateWebhookRequest(payload).
 			Execute()
 
 		if err != nil {
-			if httpRes != nil {
-				if httpRes.Body != nil {
-					body, err := io.ReadAll(httpRes.Body)
-					if err == nil {
-						fmt.Println(string(body)) // Print the HTTP response body for error details
-					} else {
-						fmt.Println("Error reading response body:", err)
-					}
-				}
-			}
-			log.Fatalf("Error creating webhook: %v", err)
+			printer.HandleAPIFailure(resp)
+			return
 		}
 
 		printer.Webhook(webhook)

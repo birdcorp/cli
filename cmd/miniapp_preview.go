@@ -6,6 +6,7 @@ import (
 	birdsdk "github.com/birdcorp/bird-go-sdk"
 	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/open"
+	"github.com/birdcorp/cli/pkg/printer"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
@@ -37,7 +38,7 @@ var miniappPreviewCmd = &cobra.Command{
 
 		ctx, apiClient := auth.MustGetAuth()
 
-		preview, _, err := apiClient.MiniprogramAPI.
+		preview, resp, err := apiClient.MiniprogramAPI.
 			CreateMiniProgramPreview(ctx).
 			CreateMiniProgramPreviewRequest(birdsdk.CreateMiniProgramPreviewRequest{
 				Url:  url,
@@ -45,10 +46,9 @@ var miniappPreviewCmd = &cobra.Command{
 			}).
 			Execute()
 		if err != nil {
-			log.Fatalf("Error creating miniapp preview: %v", err)
+			printer.HandleAPIFailure(resp)
+			return
 		}
-
-		//prettyprint.JSON(preview)
 
 		if preview.Link != nil {
 			open.Browser(*preview.Link)
@@ -60,11 +60,11 @@ func init() {
 	// No flags needed since we're using prompts
 }
 
-// go run main.go miniprogram create-preview <appID> --url <url>
+// go run main.go miniapp create-preview <appID> --url <url>
 //
 
 /*
-go run main.go miniprogram create-preview \
- --url https://miniprogram-developer.onrender.com/ \
+go run main.go miniapp create-preview \
+ --url https://miniapp-developer.onrender.com/ \
  --name "Miniprogram Developer"
 */
