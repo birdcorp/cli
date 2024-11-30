@@ -8,8 +8,7 @@
   <h1 style="border-bottom: none;">Bird CLI</h1>
   <h3>A Command-Line Interface for Managing BirdPay Merchant Services</h3>
   <p>
-    Simplify and streamline your BirdPay merchant workflows with Bird CLI. From managing orders and accounts 
-    to generating miniprogram previews, Bird CLI is your all-in-one tool for seamless merchant operations.
+    Bird CLI is a command-line tool for managing BirdPay merchant operations. It provides functionality for handling orders, accounts, webhooks, and generating miniprogram previews, all in one place to streamline your workflows.
   </p>
   <h2>
     <a href="https://docs-openapi.onrender.com">📚 Documentation</a>

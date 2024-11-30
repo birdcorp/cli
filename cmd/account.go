@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"log"
 	"time"
 
 	"github.com/birdcorp/cli/pkg/auth"
@@ -22,17 +21,18 @@ var accountCmd = &cobra.Command{
 		s.Suffix = " Fetching account information..."
 		s.Start()
 
-		account, _, err := apiClient.AccountAPI.
+		account, resp, err := apiClient.AccountAPI.
 			GetAccount(ctx).
 			Execute()
-		if err != nil {
-			s.Stop()
-			log.Fatal(err)
-		}
+
 		s.Stop()
 
-		printer.AccountInfo(account)
+		if err != nil {
+			printer.HandleAPIFailure(resp)
+			return
+		}
 
+		printer.AccountInfo(account)
 	},
 }
 

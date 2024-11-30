@@ -30,23 +30,8 @@ func handleOrderGet(ctx context.Context, apiClient *birdsdk.APIClient, identifie
 		GetOrder(ctx, identifier).
 		Execute()
 	if err != nil {
-		if resp != nil {
-			switch resp.StatusCode {
-			case 404:
-				log.Fatalf("Order not found: %s", identifier)
-			case 400:
-				log.Fatalf("Invalid order ID format: %s", identifier)
-			case 401:
-				log.Fatalf("Unauthorized: Please check your API credentials")
-			case 403:
-				log.Fatalf("Forbidden: You don't have permission to access this order")
-			default:
-				//prettyprint.JSON(resp.Body)
-				log.Fatalf("Error getting order (HTTP %d): %v", resp.StatusCode, err)
-			}
-		} else {
-			log.Fatalf("Error connecting to API: %v", err)
-		}
+		printer.HandleAPIFailure(resp)
+		return
 	}
 	if order == nil {
 		log.Fatalf("Unexpected error: Order response was empty")

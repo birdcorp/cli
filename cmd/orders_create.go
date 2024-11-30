@@ -80,23 +80,23 @@ Example:
 			RequiredBillingFields:  strings.Split(viper.GetString("required-billing-fields"), ","),
 		}
 
-		response, httpRes, err := apiClient.OrdersAPI.
+		response, resp, err := apiClient.OrdersAPI.
 			CreateOrder(ctx).
 			OrderPayload(orderPayload).
 			Execute()
 
 		if err != nil {
-			handleAPIError(err, httpRes)
-			log.Fatal("Order creation failed")
+			printer.HandleAPIFailure(resp)
+			return
 		}
 
 		// Fetch and display the created order
-		order, _, err := apiClient.OrdersAPI.
+		order, resp, err := apiClient.OrdersAPI.
 			GetOrder(ctx, response.Id).
 			Execute()
 		if err != nil {
-			pterm.Error.Printf("Error retrieving created order: %v\n", err)
-			log.Fatal("Failed to retrieve order details")
+			printer.HandleAPIFailure(resp)
+			return
 		}
 
 		printer.Order(order)

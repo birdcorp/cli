@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/birdcorp/cli/pkg/auth"
-	"github.com/birdcorp/cli/pkg/filesystem"
+	"github.com/birdcorp/cli/pkg/fs"
 	"github.com/birdcorp/cli/pkg/miniapp"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -31,7 +31,7 @@ var publishMiniappCmd = &cobra.Command{
 		sourceFile := config.Build.BuildDirectory // The file you want to zip
 		destinationZip := "./release.zip"         // The name of the output zip file
 
-		err = filesystem.ZipDir(sourceFile, destinationZip)
+		err = fs.ZipDir(sourceFile, destinationZip)
 		if err != nil {
 			log.Fatal("Error zipping file:", err)
 		} else {
@@ -82,7 +82,6 @@ var publishMiniappCmd = &cobra.Command{
 		}
 
 		fmt.Println(release.Message)
-
 	},
 }
 
