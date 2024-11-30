@@ -8,7 +8,7 @@
   <h1 style="border-bottom: none;">BirdPay CLI</h1>
   <h3>A Command-Line Interface for Managing BirdPay Merchant Services</h3>
   <p>
-    Bird CLI is a command-line tool for managing BirdPay merchant operations. It provides functionality for handling orders, accounts, webhooks, and generating miniapp previews, all in one place to streamline your workflows.
+    Bird CLI is a command-line tool for managing BirdPay merchant operations. It provides functionality for handling orders, accounts, webhooks, and miniapps, in your terminal.
   </p>
   <h2>
     <a href="https://docs-openapi.onrender.com">📚 Documentation</a>
@@ -162,7 +162,7 @@ Initialize a miniapp configuration to create a configurable `miniapp.config.json
   ```bash
   birdcli miniapp init
   ```
-  
+
 ```
 {
   "appInfo": {
@@ -179,7 +179,7 @@ Initialize a miniapp configuration to create a configurable `miniapp.config.json
     "navTextColor": "light"
   },
   "build": {
-    "buildDirectory": "_build"
+    "buildDirectory": "./build"
   },
   "assets": {
     "appIcon": "./app-icon.png"
