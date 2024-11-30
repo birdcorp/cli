@@ -1,23 +1,34 @@
 package printer
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 )
 
 func HandleAPIFailure(resp *http.Response) {
 	if resp != nil {
+		var errorResponse struct {
+			Status string `json:"status"`
+			Error  string `json:"error"`
+		}
+
+		if err := json.NewDecoder(resp.Body).Decode(&errorResponse); err != nil {
+			log.Fatalf("Error decoding response: %v", err)
+		}
+		defer resp.Body.Close()
+
 		switch resp.StatusCode {
 		case 404:
-			log.Fatal("Resource not found")
+			log.Fatalf("%s: %s", errorResponse.Status, errorResponse.Error)
 		case 400:
-			log.Fatal("Invalid request format")
+			log.Fatalf("%s: %s", errorResponse.Status, errorResponse.Error)
 		case 401:
-			log.Fatal("Unauthorized: Please check your API credentials")
+			log.Fatalf("%s: %s", errorResponse.Status, errorResponse.Error)
 		case 403:
-			log.Fatal("Forbidden: You don't have permission to access this resource")
+			log.Fatalf("%s: %s", errorResponse.Status, errorResponse.Error)
 		default:
-			log.Fatalf("Error: HTTP %d", resp.StatusCode)
+			log.Fatalf("%s: %s", errorResponse.Status, errorResponse.Error)
 		}
 	}
 }
