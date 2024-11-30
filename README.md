@@ -145,7 +145,7 @@ List all orders:
 
 ### Mini-Apps
 
-Development:
+**Development**
 
 Create a miniapp preview to generate a scannable link. You can use ngrok for local testing or provide a staging URL:
   ```bash
@@ -155,9 +155,9 @@ Create a miniapp preview to generate a scannable link. You can use ngrok for loc
   ```
 
 
-Production:
+**Production**
 
-Initialize a Miniapp config:
+Initialize a miniapp config:
   ```bash
   birdcli miniapp init
   ```
@@ -168,9 +168,11 @@ Publish a miniapp:
   birdcli miniapp publish
   ```
   
+<br/>
+
 Get Miniprogram info
   ```bash
-  birdcli miniapp get [appID]
+  birdcli get [appID]
   ```
 
 List all miniapps:
@@ -178,10 +180,6 @@ List all miniapps:
   birdcli miniapp list
   ```
 
-Delete Miniprogram
-  ```bash
-  birdcli miniapp delete <appID>
-  ```
 
 <br/>
 
