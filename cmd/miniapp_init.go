@@ -8,7 +8,7 @@ import (
 	"os"
 
 	"github.com/birdcorp/cli/pkg/auth"
-	"github.com/birdcorp/cli/pkg/miniprogram"
+	miniprogram "github.com/birdcorp/cli/pkg/miniapp"
 	"github.com/fatih/color"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
@@ -41,7 +41,7 @@ func promptUser(message string) string {
 func promptBuildDir() string {
 	buildDirOptions := []string{"./build", "./dist", "Custom"}
 	prompt := promptui.Select{
-		Label: color.CyanString("Select the directory containing your built miniprogram files (e.g. 'build')"),
+		Label: color.CyanString("Select the directory containing your built miniapp files (e.g. 'build')"),
 		Items: buildDirOptions,
 	}
 
@@ -56,10 +56,10 @@ func promptBuildDir() string {
 	return result
 }
 
-var createMiniprogramCmd = &cobra.Command{
+var createMiniappCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Initialize a new miniprogram project",
-	Long:  `Initialize a new miniprogram project with configuration and required files.`,
+	Short: "Initialize a new miniapp project",
+	Long:  `Initialize a new miniapp project with configuration and required files.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, apiClient := auth.MustGetAuth()
 
@@ -67,7 +67,7 @@ var createMiniprogramCmd = &cobra.Command{
 
 		if config != nil {
 			prompt := promptui.Prompt{
-				Label:     color.YellowString("Miniprogram config already exists. Do you want to overwrite it?"),
+				Label:     color.YellowString("Miniapp config already exists. Do you want to overwrite it?"),
 				IsConfirm: true,
 			}
 
@@ -83,8 +83,8 @@ var createMiniprogramCmd = &cobra.Command{
 		}
 
 		// Get or prompt for required fields
-		name := getRequiredFlag(cmd, "name", "Enter a name for your miniprogram (e.g. 'My Store App')")
-		description := getRequiredFlag(cmd, "description", "Enter a description for your miniprogram (e.g. 'An app for managing your store's inventory')")
+		name := getRequiredFlag(cmd, "name", "Enter a name for your miniapp (e.g. 'My Store App')")
+		description := getRequiredFlag(cmd, "description", "Enter a description for your miniapp")
 
 		// Get build directory from flag or prompt
 		buildDir := cmd.Flag("build-directory").Value.String()
@@ -100,7 +100,7 @@ var createMiniprogramCmd = &cobra.Command{
 			}
 		}
 
-		// Create miniprogram
+		// Create miniapp
 		response, httpRes, err := apiClient.MiniprogramAPI.
 			CreateMiniprogram(ctx).
 			Execute()
@@ -162,23 +162,23 @@ func downloadDefaultIcon() error {
 }
 
 func init() {
-	createMiniprogramCmd.Flags().String("name", "", "Name of the miniprogram")
-	createMiniprogramCmd.Flags().String("description", "", "Description of the miniprogram")
-	createMiniprogramCmd.Flags().String("url", defaultURL, "URL of the miniprogram")
-	createMiniprogramCmd.Flags().String("background-color", defaultBgColor, "Background color code")
-	createMiniprogramCmd.Flags().String("foreground-color", defaultFgColor, "Foreground color code")
-	createMiniprogramCmd.Flags().String("nav-background-color", defaultNavBgColor, "Navigation background color")
-	createMiniprogramCmd.Flags().String("nav-text-color", defaultNavTextColor, "Navigation text color (dark/light)")
-	createMiniprogramCmd.Flags().String("tags", defaultTags, "Comma-separated list of tags")
-	createMiniprogramCmd.Flags().String("build-directory", "", "Build directory path")
-	createMiniprogramCmd.Flags().String("icon-image", "", "Icon image path")
+	createMiniappCmd.Flags().String("name", "", "Name of the miniapp")
+	createMiniappCmd.Flags().String("description", "", "Description of the miniapp")
+	createMiniappCmd.Flags().String("url", defaultURL, "URL of the miniapp")
+	createMiniappCmd.Flags().String("background-color", defaultBgColor, "Background color code")
+	createMiniappCmd.Flags().String("foreground-color", defaultFgColor, "Foreground color code")
+	createMiniappCmd.Flags().String("nav-background-color", defaultNavBgColor, "Navigation background color")
+	createMiniappCmd.Flags().String("nav-text-color", defaultNavTextColor, "Navigation text color (dark/light)")
+	createMiniappCmd.Flags().String("tags", defaultTags, "Comma-separated list of tags")
+	createMiniappCmd.Flags().String("build-directory", "", "Build directory path")
+	createMiniappCmd.Flags().String("icon-image", "", "Icon image path")
 }
 
 /*
 Example usage:
-go run main.go miniprogram init \
+go run main.go miniapp init \
   --name "My App" \
-  --description "My awesome miniprogram" \
+  --description "My awesome miniapp" \
   --build-directory "./build" \
   --icon-image "./app-icon.png"
 */

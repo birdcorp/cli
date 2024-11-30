@@ -6,6 +6,7 @@ import (
 	"os"
 	"text/tabwriter"
 
+	birdsdk "github.com/birdcorp/bird-go-sdk"
 	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/formatting"
 	"github.com/fatih/color"
@@ -33,6 +34,31 @@ var listEventsCmd = &cobra.Command{
 
 		for _, event := range events.Data {
 			var orderId, postalCode, shippingMethod, couponCode string
+			emoji := "📡"
+			var eventColor color.Attribute
+
+			switch event.Type {
+			case birdsdk.WEBHOOK_SHIPPING_ADDRESS_CHANGE:
+				emoji = "📍"
+				eventColor = color.FgBlue
+			case birdsdk.WEBHOOK_SHIPPING_METHOD_CHANGE:
+				emoji = "🚚"
+				eventColor = color.FgYellow
+			case birdsdk.WEBHOOK_COUPON_CHANGE:
+				emoji = "🎟️"
+				eventColor = color.FgMagenta
+			case birdsdk.WEBHOOK_APPROVED:
+				emoji = "✅"
+				eventColor = color.FgGreen
+			case birdsdk.WEBHOOK_CAPTURED:
+				emoji = "💳"
+				eventColor = color.FgCyan
+			case birdsdk.WEBHOOK_SETTLED:
+				emoji = "💰"
+				eventColor = color.FgHiGreen
+			default:
+				eventColor = color.FgWhite
+			}
 
 			if event.Data.OrderId != nil {
 				orderId = *event.Data.OrderId
@@ -47,10 +73,12 @@ var listEventsCmd = &cobra.Command{
 				couponCode = *event.Data.CouponCode
 			}
 
+			eventType := color.New(eventColor).Sprintf("%s %s", emoji, event.GetType())
+
 			fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
 				formatting.FormatRelativeTime(event.GetCreatedAt()),
 				event.GetId(),
-				event.GetType(),
+				eventType,
 				event.GetStatus(),
 				orderId,
 				postalCode,

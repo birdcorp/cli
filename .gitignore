@@ -1,7 +1,7 @@
 birdcli
 
 .DS_Store
-miniprogram-config.json
+miniapp.config.json
 config.json
 
 .idea/
@@ -12,3 +12,35 @@ dist/
 
 release.zip
 app-icon.png
+
+# Dependency directories
+node_modules/
+vendor/
+
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor specific files
+.vscode/
+*.swp
+*.swo
+*~
+
+# Operating System files
+Thumbs.db
+desktop.ini
+
+# Test coverage
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Environment files
+.env.local
+.env.*.local

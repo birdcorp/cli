@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/birdcorp/cli/pkg/auth"
-	"github.com/birdcorp/cli/pkg/prettyprint"
+	"github.com/birdcorp/cli/pkg/printer"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +24,7 @@ var getEventCmd = &cobra.Command{
 			log.Fatalf("Error getting event: %v", err)
 		}
 
-		prettyprint.JSON(event)
+		printer.Event(event)
 	},
 }
 

@@ -5,38 +5,35 @@ import (
 	"log"
 
 	"github.com/birdcorp/cli/pkg/auth"
-	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/fatih/color"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
 
-var listMiniprogramCmd = &cobra.Command{
+var listMiniappCmd = &cobra.Command{
 	Use:   "list",
-	Short: "List all miniprograms",
+	Short: "List all miniapps",
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, apiClient := auth.MustGetAuth()
 
-		miniprograms, _, err := apiClient.MiniprogramAPI.
+		miniapps, _, err := apiClient.MiniprogramAPI.
 			ListMiniprograms(ctx).
 			Execute()
 		if err != nil {
-			fmt.Printf("%s Failed to list miniprogram:\n", color.RedString("❌"))
+			fmt.Printf("%s Failed to list miniapp:\n", color.RedString("❌"))
 			return
 		}
 
-		prettyprint.JSON(miniprograms)
-
-		if len(miniprograms.Data) > 0 {
+		if len(miniapps.Data) > 0 {
 			var items []string
-			for _, mp := range miniprograms.Data {
+			for _, mp := range miniapps.Data {
 				if mp.ActiveRelease != nil {
 					items = append(items, *mp.ActiveRelease.AppInfo.Name)
 				}
 			}
 
 			prompt := promptui.Select{
-				Label: "Select Miniprogram",
+				Label: "Select Miniapp",
 				Items: items,
 			}
 
@@ -51,4 +48,4 @@ var listMiniprogramCmd = &cobra.Command{
 	},
 }
 
-// go run main.go miniprogram list
+// go run main.go miniapp list

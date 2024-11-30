@@ -7,23 +7,22 @@ import (
 
 	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/filesystem"
-	"github.com/birdcorp/cli/pkg/miniprogram"
-	"github.com/birdcorp/cli/pkg/prettyprint"
+	"github.com/birdcorp/cli/pkg/miniapp"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
-var publishMiniprogramCmd = &cobra.Command{
+var publishMiniappCmd = &cobra.Command{
 	Use:   "publish",
-	Short: "Publish a miniprogram",
-	Args:  nil, // Ensure exactly one argument is provided
+	Short: "Publish a miniapp",
+	Args:  nil,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		ctx, apiClient := auth.MustGetAuth()
 
-		config, err := miniprogram.GetConfig()
+		config, err := miniapp.GetConfig()
 		if err != nil {
-			fmt.Printf("%s\n", color.RedString("Missing miniprogram config. Please run 'birdcli miniprograms init' to create one."))
+			fmt.Printf("%s\n", color.RedString("Missing miniapp config. Please run 'birdcli miniapp init' to create one."))
 			os.Exit(1)
 			return
 		}
@@ -82,9 +81,9 @@ var publishMiniprogramCmd = &cobra.Command{
 			fmt.Printf("Warning: Failed to delete temporary zip file %s: %v\n", destinationZip, err)
 		}
 
-		prettyprint.JSON(release)
+		fmt.Println(release.Message)
 
 	},
 }
 
-// go run main.go miniprogram publish
+// go run main.go miniapp publish

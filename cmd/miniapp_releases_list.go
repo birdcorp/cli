@@ -5,18 +5,18 @@ import (
 	"log"
 
 	"github.com/birdcorp/cli/pkg/auth"
-	"github.com/birdcorp/cli/pkg/miniprogram"
-	"github.com/birdcorp/cli/pkg/prettyprint"
+	"github.com/birdcorp/cli/pkg/miniapp"
+	"github.com/birdcorp/cli/pkg/printer"
 	"github.com/spf13/cobra"
 )
 
-var miniprogramReleasesListCmd = &cobra.Command{
+var miniappReleasesListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "List miniprogram releases",
+	Short: "List miniapp releases",
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, apiClient := auth.MustGetAuth()
 
-		config, err := miniprogram.GetConfig()
+		config, err := miniapp.GetConfig()
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -25,16 +25,16 @@ var miniprogramReleasesListCmd = &cobra.Command{
 			ListMiniprogramReleases(ctx, config.AppInfo.AppID).
 			Execute()
 		if err != nil {
-			fmt.Println("Error listing miniprogram releases:", err)
+			fmt.Println("Error listing miniapp releases:", err)
 			return
 		}
 
-		prettyprint.JSON(releases)
+		printer.MiniappReleases(releases.Data)
 	},
 }
 
 func init() {
-	miniprogramReleasesCmd.AddCommand(miniprogramReleasesListCmd)
+	miniappReleasesCmd.AddCommand(miniappReleasesListCmd)
 }
 
-//	go run main.go miniprograms releases list
+//	go run main.go miniapp releases list

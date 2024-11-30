@@ -6,14 +6,13 @@ import (
 	birdsdk "github.com/birdcorp/bird-go-sdk"
 	"github.com/birdcorp/cli/pkg/auth"
 	"github.com/birdcorp/cli/pkg/open"
-	"github.com/birdcorp/cli/pkg/prettyprint"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
 
-var miniprogramPreviewCmd = &cobra.Command{
+var miniappPreviewCmd = &cobra.Command{
 	Use:   "preview",
-	Short: "Preview a miniprogram",
+	Short: "Preview a miniapp",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Prompt for URL
@@ -46,10 +45,10 @@ var miniprogramPreviewCmd = &cobra.Command{
 			}).
 			Execute()
 		if err != nil {
-			log.Fatalf("Error creating miniprogram preview: %v", err)
+			log.Fatalf("Error creating miniapp preview: %v", err)
 		}
 
-		prettyprint.JSON(preview)
+		//prettyprint.JSON(preview)
 
 		if preview.Link != nil {
 			open.Browser(*preview.Link)
